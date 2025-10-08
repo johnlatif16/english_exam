@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {font-family: Arial, sans-serif; background: #f5f5f5; padding:20px;}
+    h2 {color:#333;}
+    button {margin:5px; padding:10px 15px; border:none; border-radius:5px; background:#007bff; color:white; cursor:pointer;}
+    button:hover {background:#0056b3;}
+    table {width:100%; border-collapse: collapse; margin-top:20px;}
+    th, td {border:1px solid #ccc; padding:10px; text-align:left;}
+    th {background:#007bff; color:white;}
+  </style>
+</head>
+<body>
+  <h2>Admin Dashboard</h2>
+  <button onclick="loadResults()">View Answers</button>
+  <button onclick="logout()">Logout</button>
+  <table id="resultsTable" style="display:none;">
+    <thead>
+      <tr><th>Name</th><th>Phone</th><th>Score (%)</th><th>Correct</th><th>Wrong</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const token = localStorage.getItem("token");
+    if(!token) window.location.href = "/login.html";
+
+    async function loadResults(){
+      const res = await fetch("/api/results", {
+        headers: { "Authorization": "Bearer " + token }
+      });
+      if(res.status === 401){ logout(); return; }
+      const data = await res.json();
+      const table = document.getElementById("resultsTable");
+      const tbody = table.querySelector("tbody");
+      tbody.innerHTML = "";
+      data.forEach(r=>{
+        tbody.innerHTML += `<tr><td>${r.name}</td><td>${r.phone}</td><td>${r.score}</td><td>${r.correct}</td><td>${r.wrong}</td></tr>`;
+      });
+      table.style.display = "table";
+    }
+
+    function logout(){
+      localStorage.removeItem("token");
+      window.location.href = "/login.html";
+    }
+  </script>
+</body>
+</html>
