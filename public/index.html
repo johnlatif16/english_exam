@@ -40,31 +40,27 @@
       border-bottom: 2px solid var(--primary);
       padding-bottom: 15px;
     }
-    
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: var(--border-radius);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
-    }
-    
+
     .question {
       margin-bottom: 25px;
       background: var(--light);
       padding: 20px;
       border-radius: var(--border-radius);
       border-left: 4px solid var(--primary);
+      text-align: center;
     }
-    
-    .question p {
-      font-weight: 600;
-      margin-top: 0;
-      color: var(--dark);
+
+    .question img {
+      width: 100%;
+      max-width: 700px;
+      border-radius: var(--border-radius);
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    
+
     .question label {
       display: block;
+      text-align: left;
       padding: 10px;
       margin: 5px 0;
       border-radius: 5px;
@@ -75,45 +71,20 @@
     .question label:hover {
       background: rgba(0, 123, 255, 0.1);
     }
-    
-    .result {
-      font-size: 18px;
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: var(--border-radius);
-      text-align: center;
-      font-weight: bold;
-    }
-    
-    .success {
-      background: rgba(40, 167, 69, 0.1);
-      color: var(--success);
-      border: 1px solid var(--success);
-    }
-    
-    .info {
-      background: rgba(0, 123, 255, 0.1);
-      color: var(--primary);
-      border: 1px solid var(--primary);
-    }
-    
-    input[type="text"], input[type="tel"] {
+
+    input[type="text"] {
       width: 100%;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: var(--border-radius);
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
       box-sizing: border-box;
-      font-size: 16px;
-      transition: border 0.3s;
     }
-    
-    input[type="text"]:focus, input[type="tel"]:focus {
-      border-color: var(--primary);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+
+    .text-center {
+      text-align: center;
     }
-    
+
     button {
       padding: 12px 25px;
       background: var(--primary);
@@ -126,75 +97,32 @@
       transition: all 0.3s;
       display: inline-block;
     }
-    
+
     button:hover {
       background: var(--primary-dark);
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    
-    button:disabled {
-      background: #6c757d;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    .btn-success {
-      background: var(--success);
-    }
-    
-    .btn-success:hover {
-      background: #218838;
-    }
-    
-    .btn-danger {
-      background: var(--danger);
-    }
-    
-    .btn-danger:hover {
-      background: #c82333;
-    }
-    
-    .text-center {
-      text-align: center;
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    .progress-bar {
-      height: 8px;
-      background: #e9ecef;
-      border-radius: 4px;
-      margin: 20px 0;
-      overflow: hidden;
-    }
-    
-    .progress {
-      height: 100%;
-      background: var(--primary);
-      border-radius: 4px;
-      transition: width 0.5s;
-    }
-    
-    .timer {
-      text-align: center;
+
+    .result {
       font-size: 18px;
-      font-weight: bold;
-      margin: 15px 0;
-      color: var(--dark);
-    }
-    
-    .retake-info {
-      background: rgba(255, 193, 7, 0.1);
-      border: 1px solid #ffc107;
-      color: #856404;
-      padding: 15px;
+      margin-top: 20px;
+      padding: 20px;
       border-radius: var(--border-radius);
-      margin-bottom: 20px;
       text-align: center;
+      font-weight: bold;
+    }
+
+    .success {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+
+    .info {
+      background: rgba(0, 123, 255, 0.1);
+      color: var(--primary);
+      border: 1px solid var(--primary);
     }
   </style>
 </head>
@@ -202,233 +130,68 @@
   <div class="container">
     <h2>Student Quiz</h2>
     
-    <div id="user-info" class="card">
-      <h3>Enter Your Information</h3>
-      <input type="text" id="name" placeholder="Enter your full name" />
-      <input type="tel" id="phone" placeholder="Enter your phone number" />
-      <div class="text-center">
-        <button onclick="startQuiz()">Start Quiz</button>
+    <form id="quiz">
+      <!-- Question 1 -->
+      <div class="question">
+        <p><strong>Question 1</strong></p>
+        <img src="https://i.postimg.cc/RZLd7GYC/pages-to-jpg-0001.jpg" alt="Question 1" />
+        <label><input type="radio" name="q1" value="A" /> Option A</label>
+        <label><input type="radio" name="q1" value="B" /> Option B</label>
+        <label><input type="radio" name="q1" value="C" /> Option C</label>
       </div>
-    </div>
 
-    <div id="quiz-container" class="hidden">
-      <div class="timer" id="timer">Time: 10:00</div>
-      <div class="progress-bar">
-        <div class="progress" id="progress" style="width: 0%"></div>
+      <!-- Question 2 -->
+      <div class="question">
+        <p><strong>Question 2</strong></p>
+        <img src="https://i.postimg.cc/7Zn93XRw/pages-to-jpg-0002.jpg" alt="Question 2" />
+        <label><input type="radio" name="q2" value="A" /> Option A</label>
+        <label><input type="radio" name="q2" value="B" /> Option B</label>
+        <label><input type="radio" name="q2" value="C" /> Option C</label>
       </div>
-      
-      <form id="quiz">
-        <div class="question">
-          <p>1. What is the capital of France?</p>
-          <label><input type="radio" name="q1" value="A" /> Paris</label>
-          <label><input type="radio" name="q1" value="B" /> Rome</label>
-          <label><input type="radio" name="q1" value="C" /> Madrid</label>
-        </div>
-        <div class="question">
-          <p>2. 2 + 2 = ?</p>
-          <label><input type="radio" name="q2" value="A" /> 3</label>
-          <label><input type="radio" name="q2" value="B" /> 4</label>
-          <label><input type="radio" name="q2" value="C" /> 5</label>
-        </div>
-        <div class="question">
-          <p>3. Which planet is known as the Red Planet?</p>
-          <label><input type="radio" name="q3" value="A" /> Earth</label>
-          <label><input type="radio" name="q3" value="B" /> Mars</label>
-          <label><input type="radio" name="q3" value="C" /> Jupiter</label>
-        </div>
-        <div class="text-center">
-          <button type="button" onclick="submitQuiz()" id="submit-btn">Submit Quiz</button>
-        </div>
-      </form>
-    </div>
+
+      <!-- Question 3 -->
+      <div class="question">
+        <p><strong>Question 3</strong></p>
+        <img src="https://i.postimg.cc/FH4GkwTm/pages-to-jpg-0003.jpg" alt="Question 3" />
+        <label><input type="radio" name="q3" value="A" /> Option A</label>
+        <label><input type="radio" name="q3" value="B" /> Option B</label>
+        <label><input type="radio" name="q3" value="C" /> Option C</label>
+        
+        <p><strong>Write your answers for the last 5:</strong></p>
+        <input type="text" name="q4" placeholder="Answer 4" />
+        <input type="text" name="q5" placeholder="Answer 5" />
+        <input type="text" name="q6" placeholder="Answer 6" />
+        <input type="text" name="q7" placeholder="Answer 7" />
+        <input type="text" name="q8" placeholder="Answer 8" />
+      </div>
+
+      <div class="text-center">
+        <button type="submit">Submit Quiz</button>
+      </div>
+    </form>
 
     <div class="result hidden" id="result"></div>
   </div>
 
   <script>
-    const correctAnswers = { q1: "A", q2: "B", q3: "B" };
-    let timeLeft = 600; // 10 minutes in seconds
-    let timerInterval;
-    let quizSubmitted = false;
+    // مؤقتًا إجابات صحيحة عشوائية
+    const correctAnswers = {
+      q1: "A",
+      q2: "B",
+      q3: "C"
+    };
 
-    // Check if user already submitted or if retake is allowed
-    async function checkRetakeStatus() {
-      const userPhone = localStorage.getItem('userPhone');
-      if (userPhone) {
-        try {
-          const response = await fetch(`/api/check-retake/${userPhone}`);
-          const data = await response.json();
-          
-          if (response.ok && data.allowedRetake) {
-            // Clear previous submission if retake is allowed
-            localStorage.removeItem('quizSubmitted');
-            document.getElementById('user-info').innerHTML = `
-              <div class="retake-info">
-                <p>You are allowed to retake the quiz!</p>
-                <p>Please enter your information and start the quiz.</p>
-              </div>
-              <h3>Enter Your Information</h3>
-              <input type="text" id="name" placeholder="Enter your full name" value="${localStorage.getItem('userName') || ''}" />
-              <input type="tel" id="phone" placeholder="Enter your phone number" value="${userPhone}" />
-              <div class="text-center">
-                <button onclick="startQuiz()">Start Quiz</button>
-              </div>
-            `;
-          } else if (localStorage.getItem('quizSubmitted')) {
-            document.getElementById('user-info').innerHTML = `
-              <div class="result info">
-                <p>You have already submitted the quiz.</p>
-                <p>Please contact the administrator if you need to retake it.</p>
-              </div>
-            `;
-          }
-        } catch (error) {
-          console.error("Error checking retake status:", error);
-          // If there's an error, fall back to the original check
-          if (localStorage.getItem('quizSubmitted')) {
-            document.getElementById('user-info').innerHTML = `
-              <div class="result info">
-                <p>You have already submitted the quiz.</p>
-                <p>Please contact the administrator if you need to retake it.</p>
-              </div>
-            `;
-          }
-        }
-      } else if (localStorage.getItem('quizSubmitted')) {
-        document.getElementById('user-info').innerHTML = `
-          <div class="result info">
-            <p>You have already submitted the quiz.</p>
-            <p>Please contact the administrator if you need to retake it.</p>
-          </div>
-        `;
-      }
-    }
-
-    // Check retake status when page loads
-    checkRetakeStatus();
-
-    function startQuiz() {
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      
-      if (!name || !phone) {
-        alert("Please enter your name and phone number");
-        return;
-      }
-      
-      localStorage.setItem("userName", name);
-      localStorage.setItem("userPhone", phone);
-      
-      document.getElementById("user-info").classList.add("hidden");
-      document.getElementById("quiz-container").classList.remove("hidden");
-      
-      // Start timer
-      startTimer();
-      
-      // Update progress bar as questions are answered
-      document.querySelectorAll('input[type="radio"]').forEach(radio => {
-        radio.addEventListener('change', updateProgress);
-      });
-    }
-
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          submitQuiz();
-        }
-      }, 1000);
-    }
-
-    function updateTimerDisplay() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      document.getElementById('timer').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-
-    function updateProgress() {
-      const totalQuestions = Object.keys(correctAnswers).length;
-      const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
-      const progress = (answeredQuestions / totalQuestions) * 100;
-      document.getElementById('progress').style.width = `${progress}%`;
-    }
-
-    async function submitQuiz() {
-      if (quizSubmitted) return;
-      
-      quizSubmitted = true;
-      clearInterval(timerInterval);
-      
-      const form = document.getElementById("quiz");
-      const formData = new FormData(form);
-      let correct = 0, wrong = 0;
-      
+    document.getElementById("quiz").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let score = 0;
+      const formData = new FormData(e.target);
       Object.keys(correctAnswers).forEach(q => {
-        const ans = formData.get(q);
-        if (ans === correctAnswers[q]) correct++; 
-        else wrong++;
+        if (formData.get(q) === correctAnswers[q]) score++;
       });
-      
-      const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
-      
-      // Display result
-      const resultDiv = document.getElementById("result");
-      
-      try {
-        const response = await fetch("/api/submit", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            name: localStorage.getItem("userName"),
-            phone: localStorage.getItem("userPhone"),
-            correct, 
-            wrong, 
-            score
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          resultDiv.innerHTML = `
-            <h3>Quiz Result</h3>
-            <p>Score: ${score}%</p>
-            <p>Correct Answers: ${correct}</p>
-            <p>Wrong Answers: ${wrong}</p>
-            <p>Thank you for completing the quiz!</p>
-          `;
-          
-          // Mark as submitted in localStorage
-          localStorage.setItem('quizSubmitted', 'true');
-        } else {
-          resultDiv.innerHTML = `
-            <h3>Error</h3>
-            <p>${data.message || 'Failed to submit quiz'}</p>
-          `;
-          resultDiv.classList.add("info");
-        }
-      } catch (error) {
-        console.error("Error submitting quiz:", error);
-        resultDiv.innerHTML = `
-          <h3>Network Error</h3>
-          <p>Please try again later</p>
-        `;
-        resultDiv.classList.add("info");
-      }
-      
-      if (score >= 70) {
-        resultDiv.classList.add("success");
-      } else {
-        resultDiv.classList.add("info");
-      }
-      
-      resultDiv.classList.remove("hidden");
-      document.getElementById("quiz-container").classList.add("hidden");
-      document.getElementById("submit-btn").disabled = true;
-    }
+      document.getElementById("result").classList.remove("hidden");
+      document.getElementById("result").classList.add("success");
+      document.getElementById("result").innerHTML = `<p>Your Score: ${score}/3</p>`;
+    });
   </script>
 </body>
 </html>
