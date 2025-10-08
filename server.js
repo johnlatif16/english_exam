@@ -44,15 +44,171 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post("/api/submit", async (req, res) => {
-  const { name, phone, correct, wrong, score } = req.body;
-  await db.collection("results").add({ name, phone, correct, wrong, score, timestamp: new Date() });
-  res.json({ message: "Submitted" });
+  try {
+    const { name, phone, correct, wrong, score } = req.body;
+    
+    // Check if user already submitted
+    const existingSnapshot = await db.collection("results")
+      .where("phone", "==", phone)
+      .get();
+    
+    if (!existingSnapshot.empty) {
+      // Check if retake is allowed
+      const results = existingSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      const latestResult = results.sort((a, b) => 
+        new Date(b.timestamp) - new Date(a.timestamp)
+      )[0];
+      
+      if (!latestResult.allowedRetake) {
+        return res.status(400).json({ 
+          message: "You have already submitted the quiz. Contact administrator to retake." 
+        });
+      }
+      
+      // If retake is allowed, delete old results for this phone
+      const deletePromises = existingSnapshot.docs.map(doc => doc.ref.delete());
+      await Promise.all(deletePromises);
+    }
+    
+    await db.collection("results").add({ 
+      name, 
+      phone, 
+      correct, 
+      wrong, 
+      score, 
+      timestamp: new Date(),
+      allowedRetake: false
+    });
+    
+    res.json({ message: "Submitted successfully" });
+  } catch (error) {
+    console.error("Submit error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 app.get("/api/results", verifyToken, async (req, res) => {
-  const snapshot = await db.collection("results").orderBy("timestamp", "desc").get();
-  const results = snapshot.docs.map((doc) => doc.data());
-  res.json(results);
+  try {
+    const snapshot = await db.collection("results").orderBy("timestamp", "desc").get();
+    const results = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    res.json(results);
+  } catch (error) {
+    console.error("Results error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Delete endpoint
+app.delete("/api/results/:id", verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Verify the result exists
+    const doc = await db.collection("results").doc(id).get();
+    if (!doc.exists) {
+      return res.status(404).json({ message: "Result not found" });
+    }
+    
+    // Delete the result
+    await db.collection("results").doc(id).delete();
+    
+    res.json({ message: "Result deleted successfully" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API to allow retaking quiz for a specific user
+app.post("/api/results/:id/allow-retake", verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Verify the result exists
+    const doc = await db.collection("results").doc(id).get();
+    if (!doc.exists) {
+      return res.status(404).json({ message: "Result not found" });
+    }
+    
+    // Update the result to mark it as allowed for retake
+    await db.collection("results").doc(id).update({
+      allowedRetake: true,
+      retakeAllowedAt: new Date()
+    });
+    
+    res.json({ message: "Quiz retake allowed successfully" });
+  } catch (error) {
+    console.error("Allow retake error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API to disallow retaking quiz for a specific user
+app.post("/api/results/:id/disallow-retake", verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Verify the result exists
+    const doc = await db.collection("results").doc(id).get();
+    if (!doc.exists) {
+      return res.status(404).json({ message: "Result not found" });
+    }
+    
+    // Update the result to mark it as not allowed for retake
+    await db.collection("results").doc(id).update({
+      allowedRetake: false,
+      retakeDisallowedAt: new Date()
+    });
+    
+    res.json({ message: "Quiz retake disallowed successfully" });
+  } catch (error) {
+    console.error("Disallow retake error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API to check if retake is allowed for a specific phone number
+app.get("/api/check-retake/:phone", async (req, res) => {
+  try {
+    const { phone } = req.params;
+    
+    // Find results by phone number
+    const snapshot = await db.collection("results")
+      .where("phone", "==", phone)
+      .get();
+    
+    if (snapshot.empty) {
+      return res.json({ 
+        allowedRetake: false,
+        message: "No results found for this phone number" 
+      });
+    }
+    
+    // Get the most recent result
+    const results = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    
+    const latestResult = results.sort((a, b) => 
+      new Date(b.timestamp) - new Date(a.timestamp)
+    )[0];
+    
+    res.json({ 
+      allowedRetake: latestResult.allowedRetake || false,
+      result: latestResult
+    });
+  } catch (error) {
+    console.error("Check retake error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
