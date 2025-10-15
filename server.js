@@ -45,7 +45,7 @@ app.post("/api/login", (req, res) => {
 
 app.post("/api/submit", async (req, res) => {
   try {
-    const { name, phone, correct, wrong, score } = req.body;
+    const { name, phone, correct, wrong, score, userAnswers } = req.body;
     
     // Check if user already submitted
     const existingSnapshot = await db.collection("results")
@@ -80,6 +80,7 @@ app.post("/api/submit", async (req, res) => {
       correct, 
       wrong, 
       score, 
+      userAnswers, // أضف هذا الحقل
       timestamp: new Date(),
       allowedRetake: false
     });
