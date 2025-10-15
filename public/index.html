@@ -579,43 +579,46 @@
       return userAnswers;
     }
 
-    async function submitQuiz() {
-      if (quizSubmitted) return;
-      
-      quizSubmitted = true;
-      clearInterval(timerInterval);
-      
-      const form = document.getElementById("quiz");
-      const formData = new FormData(form);
-      let correct = 0, wrong = 0;
-      
-      Object.keys(correctAnswers).forEach(q => {
-        const ans = formData.get(q);
-        if (ans === correctAnswers[q]) correct++; 
-        else wrong++;
-      });
-      
-      const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
-      
-      // جمع إجابات الطالب الفردية
-      const userAnswers = collectUserAnswers();
-      
-      // Display result
-      const resultDiv = document.getElementById("result");
-      
-      try {
-        const response = await fetch("/api/submit", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            name: localStorage.getItem("userName"),
-            phone: localStorage.getItem("userPhone"),
-            correct, 
-            wrong, 
-            score,
-            userAnswers // إضافة إجابات الطالب الفردية
-          })
-        });
+// في دالة submitQuiz في كود الطالب
+async function submitQuiz() {
+  if (quizSubmitted) return;
+  
+  quizSubmitted = true;
+  clearInterval(timerInterval);
+  
+  const form = document.getElementById("quiz");
+  const formData = new FormData(form);
+  let correct = 0, wrong = 0;
+  
+  // جمع الإجابات أولاً
+  const userAnswers = {};
+  Object.keys(correctAnswers).forEach(q => {
+    const ans = formData.get(q);
+    userAnswers[q] = ans || null;
+    if (ans === correctAnswers[q]) correct++; 
+    else wrong++;
+  });
+  
+  const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
+  
+  console.log("User Answers:", userAnswers); // للتأكد من البيانات
+  
+  // Display result
+  const resultDiv = document.getElementById("result");
+  
+  try {
+    const response = await fetch("/api/submit", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        name: localStorage.getItem("userName"),
+        phone: localStorage.getItem("userPhone"),
+        correct, 
+        wrong, 
+        score,
+        userAnswers // إرسال إجابات الطالب
+      })
+    });
         
         const data = await response.json();
         
