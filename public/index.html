@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Quiz</title>
+  <title>اختبار الطالب</title>
   <style>
     :root {
       --primary: #007bff;
@@ -22,6 +22,7 @@
       padding: 20px;
       min-height: 100vh;
       margin: 0;
+      direction: rtl;
     }
     
     .container {
@@ -196,28 +197,39 @@
       margin-bottom: 20px;
       text-align: center;
     }
+    
+    .section-title {
+      margin-top: 30px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary);
+      color: var(--dark);
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Student Quiz</h2>
+    <h2>اختبار الطالب</h2>
     
     <div id="user-info" class="card">
-      <h3>Enter Your Information</h3>
-      <input type="text" id="name" placeholder="Enter your full name" />
-      <input type="tel" id="phone" placeholder="Enter your phone number" />
+      <h3>أدخل معلوماتك</h3>
+      <input type="text" id="name" placeholder="أدخل اسمك الكامل" />
+      <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" />
       <div class="text-center">
-        <button onclick="startQuiz()">Start Quiz</button>
+        <button onclick="startQuiz()">ابدأ الاختبار</button>
       </div>
     </div>
 
     <div id="quiz-container" class="hidden">
-      <div class="timer" id="timer">Time: 10:00</div>
+      <div class="timer" id="timer">الوقت: 10:00</div>
       <div class="progress-bar">
         <div class="progress" id="progress" style="width: 0%"></div>
       </div>
       
       <form id="quiz">
+        <!-- الأسئلة القديمة -->
+        <h3 class="section-title">الجزء الأول: اختيار الإجابة الصحيحة</h3>
+        
         <div class="question">
           <p>1. Which do you think is …………………… city in the world?</p>
           <label><input type="radio" name="q1" value="A" /> exciting</label>
@@ -234,6 +246,7 @@
           <label><input type="radio" name="q2" value="D" /> many</label>
         </div>
         
+        <!-- باقي الأسئلة القديمة -->
         <div class="question">
           <p>3. Ali is as ………………………… as Sami. They are the same height.</p>
           <label><input type="radio" name="q3" value="A" /> tall</label>
@@ -331,7 +344,7 @@
         </div>
         
         <div class="question">
-          <p>15. Dalia is the same …………………………….. as Diana.</p>
+          <p>15. Dalia and Mary are the same ……………………………..</p>
           <label><input type="radio" name="q15" value="A" /> old</label>
           <label><input type="radio" name="q15" value="B" /> young</label>
           <label><input type="radio" name="q15" value="C" /> age</label>
@@ -418,8 +431,211 @@
           <label><input type="radio" name="q25" value="D" /> in</label>
         </div>
         
+        <!-- الأسئلة الجديدة - تصحيح الأخطاء -->
+        <h3 class="section-title">الجزء الثاني: تصحيح الأخطاء</h3>
+        
+        <div class="question">
+          <p>26. Ramy thinks that his football team is best than all the other teams.</p>
+          <label><input type="radio" name="q26" value="A" /> better than</label>
+          <label><input type="radio" name="q26" value="B" /> the best than</label>
+          <label><input type="radio" name="q26" value="C" /> best from</label>
+          <label><input type="radio" name="q26" value="D" /> the best of</label>
+        </div>
+        
+        <div class="question">
+          <p>27. The more you study, the best marks you'll get.</p>
+          <label><input type="radio" name="q27" value="A" /> the better marks</label>
+          <label><input type="radio" name="q27" value="B" /> the good marks</label>
+          <label><input type="radio" name="q27" value="C" /> best marks</label>
+          <label><input type="radio" name="q27" value="D" /> the bestest marks</label>
+        </div>
+        
+        <div class="question">
+          <p>28. No other river in the world is longest than the Nile.</p>
+          <label><input type="radio" name="q28" value="A" /> longer than</label>
+          <label><input type="radio" name="q28" value="B" /> longest from</label>
+          <label><input type="radio" name="q28" value="C" /> the longest than</label>
+          <label><input type="radio" name="q28" value="D" /> more long than</label>
+        </div>
+        
+        <div class="question">
+          <p>29. The fastest you drive, the earlier you arrive.</p>
+          <label><input type="radio" name="q29" value="A" /> The faster</label>
+          <label><input type="radio" name="q29" value="B" /> The fast</label>
+          <label><input type="radio" name="q29" value="C" /> Fastest</label>
+          <label><input type="radio" name="q29" value="D" /> The more fast</label>
+        </div>
+        
+        <div class="question">
+          <p>30. Mark and Sherif aren’t the same tall.</p>
+          <label><input type="radio" name="q30" value="A" /> the same height</label>
+          <label><input type="radio" name="q30" value="B" /> same tall</label>
+          <label><input type="radio" name="q30" value="C" /> the same as tall</label>
+          <label><input type="radio" name="q30" value="D" /> same height</label>
+        </div>
+        
+        <div class="question">
+          <p>31. I have never met such a best friend.</p>
+          <label><input type="radio" name="q31" value="A" /> such a good friend</label>
+          <label><input type="radio" name="q31" value="B" /> such best friend</label>
+          <label><input type="radio" name="q31" value="C" /> a such best friend</label>
+          <label><input type="radio" name="q31" value="D" /> such the best friend</label>
+        </div>
+        
+        <div class="question">
+          <p>32. Dalia and Mary are the same old.</p>
+          <label><input type="radio" name="q32" value="A" /> the same age</label>
+          <label><input type="radio" name="q32" value="B" /> same old</label>
+          <label><input type="radio" name="q32" value="C" /> the same as old</label>
+          <label><input type="radio" name="q32" value="D" /> same age</label>
+        </div>
+        
+        <div class="question">
+          <p>33. Nobody works as harder as Albert does.</p>
+          <label><input type="radio" name="q33" value="A" /> as hard as</label>
+          <label><input type="radio" name="q33" value="B" /> as harder than</label>
+          <label><input type="radio" name="q33" value="C" /> harder as</label>
+          <label><input type="radio" name="q33" value="D" /> the hardest as</label>
+        </div>
+        
+        <div class="question">
+          <p>34. Rania is the most tall girl in class.</p>
+          <label><input type="radio" name="q34" value="A" /> the tallest</label>
+          <label><input type="radio" name="q34" value="B" /> most tall</label>
+          <label><input type="radio" name="q34" value="C" /> the most tallest</label>
+          <label><input type="radio" name="q34" value="D" /> tallest</label>
+        </div>
+        
+        <div class="question">
+          <p>35. No city in Egypt is big than Cairo.</p>
+          <label><input type="radio" name="q35" value="A" /> bigger than</label>
+          <label><input type="radio" name="q35" value="B" /> big as</label>
+          <label><input type="radio" name="q35" value="C" /> the biggest than</label>
+          <label><input type="radio" name="q35" value="D" /> more big than</label>
+        </div>
+        
+        <div class="question">
+          <p>36. The much food you eat, the fatter you become.</p>
+          <label><input type="radio" name="q36" value="A" /> The more</label>
+          <label><input type="radio" name="q36" value="B" /> The much</label>
+          <label><input type="radio" name="q36" value="C" /> Much</label>
+          <label><input type="radio" name="q36" value="D" /> The most</label>
+        </div>
+        
+        <div class="question">
+          <p>37. No student in our class is as cleverer as John.</p>
+          <label><input type="radio" name="q37" value="A" /> as clever as</label>
+          <label><input type="radio" name="q37" value="B" /> as cleverer than</label>
+          <label><input type="radio" name="q37" value="C" /> cleverer as</label>
+          <label><input type="radio" name="q37" value="D" /> the cleverest as</label>
+        </div>
+        
+        <div class="question">
+          <p>38. Tokyo is the more busier city in the world.</p>
+          <label><input type="radio" name="q38" value="A" /> the busiest</label>
+          <label><input type="radio" name="q38" value="B" /> the more busy</label>
+          <label><input type="radio" name="q38" value="C" /> the most busiest</label>
+          <label><input type="radio" name="q38" value="D" /> busiest</label>
+        </div>
+        
+        <div class="question">
+          <p>39. Everyone in my family is young than my grandfather.</p>
+          <label><input type="radio" name="q39" value="A" /> younger than</label>
+          <label><input type="radio" name="q39" value="B" /> young as</label>
+          <label><input type="radio" name="q39" value="C" /> the youngest than</label>
+          <label><input type="radio" name="q39" value="D" /> more young than</label>
+        </div>
+        
+        <div class="question">
+          <p>40. Mahmoud is the most taller boy in the class.</p>
+          <label><input type="radio" name="q40" value="A" /> the tallest</label>
+          <label><input type="radio" name="q40" value="B" /> most tall</label>
+          <label><input type="radio" name="q40" value="C" /> the most tall</label>
+          <label><input type="radio" name="q40" value="D" /> taller</label>
+        </div>
+        
+        <div class="question">
+          <p>41. This is the less interesting book I've ever read.</p>
+          <label><input type="radio" name="q41" value="A" /> the least interesting</label>
+          <label><input type="radio" name="q41" value="B" /> the less interesting</label>
+          <label><input type="radio" name="q41" value="C" /> the lesser interesting</label>
+          <label><input type="radio" name="q41" value="D" /> least interesting</label>
+        </div>
+        
+        <div class="question">
+          <p>42. The apple tree and the pear tree are both the same high.</p>
+          <label><input type="radio" name="q42" value="A" /> the same height</label>
+          <label><input type="radio" name="q42" value="B" /> same high</label>
+          <label><input type="radio" name="q42" value="C" /> the same as high</label>
+          <label><input type="radio" name="q42" value="D" /> same height</label>
+        </div>
+        
+        <div class="question">
+          <p>43. Omar can run most quickly than all the other boys in his class.</p>
+          <label><input type="radio" name="q43" value="A" /> more quickly than</label>
+          <label><input type="radio" name="q43" value="B" /> most quickly as</label>
+          <label><input type="radio" name="q43" value="C" /> the most quickly than</label>
+          <label><input type="radio" name="q43" value="D" /> quicker than</label>
+        </div>
+        
+        <div class="question">
+          <p>44. This is most exciting film I've ever seen.</p>
+          <label><input type="radio" name="q44" value="A" /> the most exciting</label>
+          <label><input type="radio" name="q44" value="B" /> most exciting</label>
+          <label><input type="radio" name="q44" value="C" /> the more exciting</label>
+          <label><input type="radio" name="q44" value="D" /> more exciting</label>
+        </div>
+        
+        <div class="question">
+          <p>45. English is more easier to learn than Chinese.</p>
+          <label><input type="radio" name="q45" value="A" /> easier to learn</label>
+          <label><input type="radio" name="q45" value="B" /> more easy to learn</label>
+          <label><input type="radio" name="q45" value="C" /> the easiest to learn</label>
+          <label><input type="radio" name="q45" value="D" /> easy to learn</label>
+        </div>
+        
+        <div class="question">
+          <p>46. The more people want something, the cheapest it will be.</p>
+          <label><input type="radio" name="q46" value="A" /> the cheaper</label>
+          <label><input type="radio" name="q46" value="B" /> the cheapest</label>
+          <label><input type="radio" name="q46" value="C" /> cheap</label>
+          <label><input type="radio" name="q46" value="D" /> the more cheap</label>
+        </div>
+        
+        <div class="question">
+          <p>47. Neveen is as better as Demyana.</p>
+          <label><input type="radio" name="q47" value="A" /> as good as</label>
+          <label><input type="radio" name="q47" value="B" /> as better than</label>
+          <label><input type="radio" name="q47" value="C" /> better as</label>
+          <label><input type="radio" name="q47" value="D" /> the best as</label>
+        </div>
+        
+        <div class="question">
+          <p>48. Aseel is the better girl I have ever met.</p>
+          <label><input type="radio" name="q48" value="A" /> the best</label>
+          <label><input type="radio" name="q48" value="B" /> better</label>
+          <label><input type="radio" name="q48" value="C" /> the good</label>
+          <label><input type="radio" name="q48" value="D" /> best</label>
+        </div>
+        
+        <div class="question">
+          <p>49. Everest is not as high than that.</p>
+          <label><input type="radio" name="q49" value="A" /> as high as</label>
+          <label><input type="radio" name="q49" value="B" /> as high than</label>
+          <label><input type="radio" name="q49" value="C" /> high as</label>
+          <label><input type="radio" name="q49" value="D" /> higher as</label>
+        </div>
+        
+        <div class="question">
+          <p>50. This question is many more difficult than the previous one.</p>
+          <label><input type="radio" name="q50" value="A" /> much more difficult</label>
+          <label><input type="radio" name="q50" value="B" /> many more difficult</label>
+          <label><input type="radio" name="q50" value="C" /> much difficult</label>
+          <label><input type="radio" name="q50" value="D" /> more much difficult</label>
+        </div>
+        
         <div class="text-center">
-          <button type="button" onclick="submitQuiz()" id="submit-btn">Submit Quiz</button>
+          <button type="button" onclick="submitQuiz()" id="submit-btn">إرسال الاختبار</button>
         </div>
       </form>
     </div>
@@ -428,8 +644,9 @@
   </div>
 
   <script>
-    // الإجابات الصحيحة للأسئلة الجديدة
+    // الإجابات الصحيحة للأسئلة القديمة والجديدة
     const correctAnswers = {
+      // الأسئلة القديمة
       q1: "D", // the most exciting
       q2: "A", // a lot
       q3: "A", // tall
@@ -454,75 +671,46 @@
       q22: "B", // worse
       q23: "A", // a lot
       q24: "D", // such
-      q25: "C"  // to
+      q25: "C", // to
+      
+      // الأسئلة الجديدة
+      q26: "A", // better than
+      q27: "A", // the better marks
+      q28: "A", // longer than
+      q29: "A", // The faster
+      q30: "A", // the same height
+      q31: "A", // such a good friend
+      q32: "A", // the same age
+      q33: "A", // as hard as
+      q34: "A", // the tallest
+      q35: "A", // bigger than
+      q36: "A", // The more
+      q37: "A", // as clever as
+      q38: "A", // the busiest
+      q39: "A", // younger than
+      q40: "A", // the tallest
+      q41: "A", // the least interesting
+      q42: "A", // the same height
+      q43: "A", // more quickly than
+      q44: "A", // the most exciting
+      q45: "A", // easier to learn
+      q46: "A", // the cheaper
+      q47: "A", // as good as
+      q48: "A", // the best
+      q49: "A", // as high as
+      q50: "A"  // much more difficult
     };
     
-    let timeLeft = 600; // 10 minutes in seconds
+    let timeLeft = 1200; // 20 minutes in seconds (تم زيادة الوقت بسبب زيادة الأسئلة)
     let timerInterval;
     let quizSubmitted = false;
-
-    // Check if user already submitted or if retake is allowed
-    async function checkRetakeStatus() {
-      const userPhone = localStorage.getItem('userPhone');
-      if (userPhone) {
-        try {
-          const response = await fetch(`/api/check-retake/${userPhone}`);
-          const data = await response.json();
-          
-          if (response.ok && data.allowedRetake) {
-            // Clear previous submission if retake is allowed
-            localStorage.removeItem('quizSubmitted');
-            document.getElementById('user-info').innerHTML = `
-              <div class="retake-info">
-                <p>You are allowed to retake the quiz!</p>
-                <p>Please enter your information and start the quiz.</p>
-              </div>
-              <h3>Enter Your Information</h3>
-              <input type="text" id="name" placeholder="Enter your full name" value="${localStorage.getItem('userName') || ''}" />
-              <input type="tel" id="phone" placeholder="Enter your phone number" value="${userPhone}" />
-              <div class="text-center">
-                <button onclick="startQuiz()">Start Quiz</button>
-              </div>
-            `;
-          } else if (localStorage.getItem('quizSubmitted')) {
-            document.getElementById('user-info').innerHTML = `
-              <div class="result info">
-                <p>You have already submitted the quiz.</p>
-                <p>Please contact the administrator if you need to retake it.</p>
-              </div>
-            `;
-          }
-        } catch (error) {
-          console.error("Error checking retake status:", error);
-          // If there's an error, fall back to the original check
-          if (localStorage.getItem('quizSubmitted')) {
-            document.getElementById('user-info').innerHTML = `
-              <div class="result info">
-                <p>You have already submitted the quiz.</p>
-                <p>Please contact the administrator if you need to retake it.</p>
-              </div>
-            `;
-          }
-        }
-      } else if (localStorage.getItem('quizSubmitted')) {
-        document.getElementById('user-info').innerHTML = `
-          <div class="result info">
-            <p>You have already submitted the quiz.</p>
-            <p>Please contact the administrator if you need to retake it.</p>
-          </div>
-        `;
-      }
-    }
-
-    // Check retake status when page loads
-    checkRetakeStatus();
 
     function startQuiz() {
       const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
       
       if (!name || !phone) {
-        alert("Please enter your name and phone number");
+        alert("الرجاء إدخال الاسم ورقم الهاتف");
         return;
       }
       
@@ -532,10 +720,10 @@
       document.getElementById("user-info").classList.add("hidden");
       document.getElementById("quiz-container").classList.remove("hidden");
       
-      // Start timer
+      // بدء المؤقت
       startTimer();
       
-      // Update progress bar as questions are answered
+      // تحديث شريط التقدم عند الإجابة على الأسئلة
       document.querySelectorAll('input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', updateProgress);
       });
@@ -556,7 +744,7 @@
     function updateTimerDisplay() {
       const minutes = Math.floor(timeLeft / 60);
       const seconds = timeLeft % 60;
-      document.getElementById('timer').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      document.getElementById('timer').textContent = `الوقت: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     function updateProgress() {
@@ -566,7 +754,7 @@
       document.getElementById('progress').style.width = `${progress}%`;
     }
 
-    async function submitQuiz() {
+    function submitQuiz() {
       if (quizSubmitted) return;
       
       quizSubmitted = true;
@@ -584,50 +772,16 @@
       
       const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
       
-      // Display result
+      // عرض النتيجة
       const resultDiv = document.getElementById("result");
       
-      try {
-        const response = await fetch("/api/submit", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            name: localStorage.getItem("userName"),
-            phone: localStorage.getItem("userPhone"),
-            correct, 
-            wrong, 
-            score
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          resultDiv.innerHTML = `
-            <h3>Quiz Result</h3>
-            <p>Score: ${score}%</p>
-            <p>Correct Answers: ${correct}</p>
-            <p>Wrong Answers: ${wrong}</p>
-            <p>Thank you for completing the quiz!</p>
-          `;
-          
-          // Mark as submitted in localStorage
-          localStorage.setItem('quizSubmitted', 'true');
-        } else {
-          resultDiv.innerHTML = `
-            <h3>Error</h3>
-            <p>${data.message || 'Failed to submit quiz'}</p>
-          `;
-          resultDiv.classList.add("info");
-        }
-      } catch (error) {
-        console.error("Error submitting quiz:", error);
-        resultDiv.innerHTML = `
-          <h3>Network Error</h3>
-          <p>Please try again later</p>
-        `;
-        resultDiv.classList.add("info");
-      }
+      resultDiv.innerHTML = `
+        <h3>نتيجة الاختبار</h3>
+        <p>النسبة المئوية: ${score}%</p>
+        <p>الإجابات الصحيحة: ${correct}</p>
+        <p>الإجابات الخاطئة: ${wrong}</p>
+        <p>شكراً لك على إكمال الاختبار!</p>
+      `;
       
       if (score >= 70) {
         resultDiv.classList.add("success");
