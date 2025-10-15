@@ -43,9 +43,57 @@ app.post("/api/login", (req, res) => {
   }
 });
 
+// API to track user attempts
+app.post("/api/track-attempt", async (req, res) => {
+  try {
+    const { phone, action } = req.body; // action: 'start', 'refresh', 'submit'
+    
+    await db.collection("attempts").add({
+      phone,
+      action,
+      timestamp: new Date(),
+      userAgent: req.get('User-Agent')
+    });
+    
+    res.json({ message: "Attempt tracked successfully" });
+  } catch (error) {
+    console.error("Track attempt error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API to get user attempts
+app.get("/api/attempts/:phone", async (req, res) => {
+  try {
+    const { phone } = req.params;
+    
+    const snapshot = await db.collection("attempts")
+      .where("phone", "==", phone)
+      .orderBy("timestamp", "desc")
+      .get();
+    
+    const attempts = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    
+    res.json(attempts);
+  } catch (error) {
+    console.error("Get attempts error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.post("/api/submit", async (req, res) => {
   try {
     const { name, phone, correct, wrong, score, userAnswers } = req.body;
+    
+    // Track submission attempt
+    await db.collection("attempts").add({
+      phone,
+      action: 'submit',
+      timestamp: new Date()
+    });
     
     // Check if user already submitted
     const existingSnapshot = await db.collection("results")
@@ -80,7 +128,7 @@ app.post("/api/submit", async (req, res) => {
       correct, 
       wrong, 
       score, 
-      userAnswers, // أضف هذا الحقل
+      userAnswers,
       timestamp: new Date(),
       allowedRetake: false
     });
