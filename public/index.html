@@ -566,6 +566,19 @@
       document.getElementById('progress').style.width = `${progress}%`;
     }
 
+    // دالة جديدة لجمع إجابات الطالب
+    function collectUserAnswers() {
+      const userAnswers = {};
+      const form = document.getElementById("quiz");
+      const formData = new FormData(form);
+      
+      Object.keys(correctAnswers).forEach(q => {
+        userAnswers[q] = formData.get(q) || null;
+      });
+      
+      return userAnswers;
+    }
+
     async function submitQuiz() {
       if (quizSubmitted) return;
       
@@ -584,6 +597,9 @@
       
       const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
       
+      // جمع إجابات الطالب الفردية
+      const userAnswers = collectUserAnswers();
+      
       // Display result
       const resultDiv = document.getElementById("result");
       
@@ -596,7 +612,8 @@
             phone: localStorage.getItem("userPhone"),
             correct, 
             wrong, 
-            score
+            score,
+            userAnswers // إضافة إجابات الطالب الفردية
           })
         });
         
