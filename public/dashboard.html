@@ -159,7 +159,7 @@
     }
     
     .action-cell {
-      width: 250px;
+      width: 280px;
       text-align: center;
     }
     
@@ -167,6 +167,7 @@
       display: flex;
       gap: 5px;
       justify-content: center;
+      flex-wrap: wrap;
     }
     
     .hidden {
@@ -235,42 +236,66 @@
     
     .question-item {
       margin-bottom: 15px;
-      padding: 10px;
+      padding: 15px;
       background: white;
       border-radius: 5px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-left: 4px solid #ddd;
+    }
+    
+    .question-item.correct {
+      border-left-color: var(--success);
+    }
+    
+    .question-item.incorrect {
+      border-left-color: var(--danger);
     }
     
     .question-text {
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
     }
     
     .answer-row {
       display: flex;
-      margin-bottom: 5px;
-      padding: 5px;
-      border-radius: 3px;
+      margin-bottom: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      align-items: center;
     }
     
     .answer-correct {
       background-color: rgba(40, 167, 69, 0.1);
-      border-left: 3px solid var(--success);
+      border: 1px solid rgba(40, 167, 69, 0.3);
     }
     
     .answer-incorrect {
       background-color: rgba(220, 53, 69, 0.1);
-      border-left: 3px solid var(--danger);
+      border: 1px solid rgba(220, 53, 69, 0.3);
     }
     
     .answer-label {
       font-weight: 600;
-      min-width: 120px;
+      min-width: 150px;
+      margin-right: 10px;
     }
     
     .questions-toggle {
-      margin-top: 10px;
+      margin-top: 15px;
       text-align: center;
+    }
+    
+    .questions-row {
+      background-color: #f8f9fa;
+    }
+    
+    .questions-row td {
+      padding: 0;
+    }
+    
+    .questions-content {
+      padding: 20px;
     }
   </style>
 </head>
@@ -325,185 +350,40 @@
 
     // تعريف الإجابات الصحيحة
     const correctAnswers = {
-      q1: "D", // the most exciting
-      q2: "A", // a lot
-      q3: "A", // tall
-      q4: "A", // worse
-      q5: "B", // expensive
-      q6: "D", // oldest
-      q7: "B", // most
-      q8: "A", // more dangerous
-      q9: "C", // highest
-      q10: "A", // so
-      q11: "B", // higher
-      q12: "A", // deepest
-      q13: "A", // biggest
-      q14: "B", // better
-      q15: "C", // age
-      q16: "B", // younger
-      q17: "C", // the tallest
-      q18: "A", // a little
-      q19: "C", // tallest
-      q20: "D", // the cleverest
-      q21: "C", // the most
-      q22: "B", // worse
-      q23: "A", // a lot
-      q24: "D", // such
-      q25: "C"  // to
+      q1: "D", q2: "A", q3: "A", q4: "A", q5: "B",
+      q6: "D", q7: "B", q8: "A", q9: "C", q10: "A",
+      q11: "B", q12: "A", q13: "A", q14: "B", q15: "C",
+      q16: "B", q17: "C", q18: "A", q19: "C", q20: "D",
+      q21: "C", q22: "B", q23: "A", q24: "D", q25: "C"
     };
 
     // تعريف خيارات الإجابات لكل سؤال
     const answerOptions = {
-      q1: {
-        A: "exciting",
-        B: "more exciting", 
-        C: "most exciting",
-        D: "the most exciting"
-      },
-      q2: {
-        A: "a lot",
-        B: "a lot of",
-        C: "lots of", 
-        D: "many"
-      },
-      q3: {
-        A: "tall",
-        B: "heavy",
-        C: "high",
-        D: "long"
-      },
-      q4: {
-        A: "worse",
-        B: "the worst",
-        C: "more badly",
-        D: "badly"
-      },
-      q5: {
-        A: "more expensive",
-        B: "expensive",
-        C: "most expensive",
-        D: "less expensive"
-      },
-      q6: {
-        A: "old",
-        B: "older",
-        C: "eldest",
-        D: "oldest"
-      },
-      q7: {
-        A: "more",
-        B: "most",
-        C: "less",
-        D: "as"
-      },
-      q8: {
-        A: "more dangerous",
-        B: "most dangerous",
-        C: "so dangerous",
-        D: "as dangerous"
-      },
-      q9: {
-        A: "high",
-        B: "higher",
-        C: "highest",
-        D: "highly"
-      },
-      q10: {
-        A: "so",
-        B: "very",
-        C: "highly",
-        D: "a lot"
-      },
-      q11: {
-        A: "high",
-        B: "higher",
-        C: "highest",
-        D: "highly"
-      },
-      q12: {
-        A: "deepest",
-        B: "deep",
-        C: "deeper",
-        D: "depth"
-      },
-      q13: {
-        A: "biggest",
-        B: "bigger",
-        C: "big",
-        D: "tallest"
-      },
-      q14: {
-        A: "good",
-        B: "better",
-        C: "best",
-        D: "more good"
-      },
-      q15: {
-        A: "old",
-        B: "young",
-        C: "age",
-        D: "older"
-      },
-      q16: {
-        A: "young",
-        B: "younger",
-        C: "youngest",
-        D: "more young"
-      },
-      q17: {
-        A: "tall",
-        B: "taller",
-        C: "the tallest",
-        D: "as tall"
-      },
-      q18: {
-        A: "a little",
-        B: "little",
-        C: "less",
-        D: "the least"
-      },
-      q19: {
-        A: "highest",
-        B: "longest",
-        C: "tallest",
-        D: "deepest"
-      },
-      q20: {
-        A: "cleverer",
-        B: "clever",
-        C: "less clever",
-        D: "the cleverest"
-      },
-      q21: {
-        A: "more",
-        B: "much",
-        C: "the most",
-        D: "most"
-      },
-      q22: {
-        A: "fewer",
-        B: "worse",
-        C: "fewest",
-        D: "worst"
-      },
-      q23: {
-        A: "a lot",
-        B: "a lot of",
-        C: "lots of",
-        D: "many"
-      },
-      q24: {
-        A: "so",
-        B: "thus",
-        C: "very",
-        D: "such"
-      },
-      q25: {
-        A: "at",
-        B: "from",
-        C: "to",
-        D: "in"
-      }
+      q1: { A: "exciting", B: "more exciting", C: "most exciting", D: "the most exciting" },
+      q2: { A: "a lot", B: "a lot of", C: "lots of", D: "many" },
+      q3: { A: "tall", B: "heavy", C: "high", D: "long" },
+      q4: { A: "worse", B: "the worst", C: "more badly", D: "badly" },
+      q5: { A: "more expensive", B: "expensive", C: "most expensive", D: "less expensive" },
+      q6: { A: "old", B: "older", C: "eldest", D: "oldest" },
+      q7: { A: "more", B: "most", C: "less", D: "as" },
+      q8: { A: "more dangerous", B: "most dangerous", C: "so dangerous", D: "as dangerous" },
+      q9: { A: "high", B: "higher", C: "highest", D: "highly" },
+      q10: { A: "so", B: "very", C: "highly", D: "a lot" },
+      q11: { A: "high", B: "higher", C: "highest", D: "highly" },
+      q12: { A: "deepest", B: "deep", C: "deeper", D: "depth" },
+      q13: { A: "biggest", B: "bigger", C: "big", D: "tallest" },
+      q14: { A: "good", B: "better", C: "best", D: "more good" },
+      q15: { A: "old", B: "young", C: "age", D: "older" },
+      q16: { A: "young", B: "younger", C: "youngest", D: "more young" },
+      q17: { A: "tall", B: "taller", C: "the tallest", D: "as tall" },
+      q18: { A: "a little", B: "little", C: "less", D: "the least" },
+      q19: { A: "highest", B: "longest", C: "tallest", D: "deepest" },
+      q20: { A: "cleverer", B: "clever", C: "less clever", D: "the cleverest" },
+      q21: { A: "more", B: "much", C: "the most", D: "most" },
+      q22: { A: "fewer", B: "worse", C: "fewest", D: "worst" },
+      q23: { A: "a lot", B: "a lot of", C: "lots of", D: "many" },
+      q24: { A: "so", B: "thus", C: "very", D: "such" },
+      q25: { A: "at", B: "from", C: "to", D: "in" }
     };
 
     // تعريف نصوص الأسئلة
@@ -537,23 +417,37 @@
 
     // دالة لإنشاء عرض الأسئلة والإجابات
     function createQuestionsDisplay(userAnswers) {
+      if (!userAnswers) {
+        return '<div class="questions-container"><p>No answers available</p></div>';
+      }
+
       let html = '<div class="questions-container">';
+      html += '<h3>Student Answers Details</h3>';
       
       Object.keys(questionTexts).forEach(questionId => {
         const userAnswer = userAnswers[questionId];
         const correctAnswer = correctAnswers[questionId];
         const isCorrect = userAnswer === correctAnswer;
         
+        const userAnswerText = userAnswer ? answerOptions[questionId][userAnswer] : 'لم يتم الإجابة';
+        const correctAnswerText = answerOptions[questionId][correctAnswer];
+        
         html += `
-          <div class="question-item">
+          <div class="question-item ${isCorrect ? 'correct' : 'incorrect'}">
             <div class="question-text">${questionTexts[questionId]}</div>
             <div class="answer-row ${isCorrect ? 'answer-correct' : 'answer-incorrect'}">
               <span class="answer-label">إجابة الطالب:</span>
-              <span>${userAnswer ? answerOptions[questionId][userAnswer] : 'لم يتم الإجابة'}</span>
+              <span><strong>${userAnswerText}</strong> ${userAnswer ? `(${userAnswer})` : ''}</span>
             </div>
             <div class="answer-row answer-correct">
               <span class="answer-label">الإجابة الصحيحة:</span>
-              <span>${answerOptions[questionId][correctAnswer]}</span>
+              <span><strong>${correctAnswerText}</strong> (${correctAnswer})</span>
+            </div>
+            <div class="answer-row">
+              <span class="answer-label">الحالة:</span>
+              <span style="color: ${isCorrect ? 'green' : 'red'}; font-weight: bold;">
+                ${isCorrect ? '✓ صحيحة' : '✗ خاطئة'}
+              </span>
             </div>
           </div>
         `;
@@ -574,11 +468,14 @@
         // إذا لم يكن موجودًا، قم بإنشائه وعرضه
         const row = document.createElement('tr');
         row.id = `questions-${userId}`;
+        row.className = 'questions-row';
         row.innerHTML = `
           <td colspan="7">
-            ${createQuestionsDisplay(userAnswers)}
-            <div class="questions-toggle">
-              <button class="btn-info" onclick="toggleQuestions('${userId}', ${JSON.stringify(userAnswers).replace(/'/g, "\\'")})">اخفاء</button>
+            <div class="questions-content">
+              ${createQuestionsDisplay(userAnswers)}
+              <div class="questions-toggle">
+                <button class="btn-info" onclick="toggleQuestions('${userId}')">اخفاء الأسئلة</button>
+              </div>
             </div>
           </td>
         `;
@@ -586,6 +483,11 @@
         // إدراج الصف بعد الصف الحالي للطالب
         const userRow = document.querySelector(`tr[data-user-id="${userId}"]`);
         userRow.parentNode.insertBefore(row, userRow.nextSibling);
+        
+        // تغيير نص الزر إلى "اخفاء"
+        const button = userRow.querySelector('.toggle-questions-btn');
+        button.textContent = 'اخفاء الاسئلة';
+        button.onclick = function() { toggleQuestions(userId); };
       }
     }
 
@@ -640,17 +542,22 @@
               ? '<span class="status-badge status-allowed">Allowed</span>' 
               : '<span class="status-badge status-disallowed">Not Allowed</span>';
             
+            // التأكد من وجود userAnswers
+            const hasUserAnswers = r.userAnswers && Object.keys(r.userAnswers).length > 0;
+            
             tbody.innerHTML += `
               <tr data-user-id="${r.id}">
                 <td>${r.name}</td>
                 <td>${r.phone}</td>
-                <td class="${scoreClass}">${r.score}</td>
+                <td class="${scoreClass}">${r.score}%</td>
                 <td>${r.correct}</td>
                 <td>${r.wrong}</td>
                 <td>${statusBadge}</td>
                 <td class="action-cell">
                   <div class="action-buttons">
-                    <button class="btn-info" onclick="toggleQuestions('${r.id}', ${JSON.stringify(r.userAnswers || {}).replace(/'/g, "\\'")})">اظهار الاسئلة بالاجابات</button>
+                    <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}', ${hasUserAnswers ? JSON.stringify(r.userAnswers).replace(/'/g, "\\'") : '{}'})">
+                      ${hasUserAnswers ? 'اظهار الاسئلة بالاجابات' : 'لا توجد إجابات'}
+                    </button>
                     ${isAllowed 
                       ? `<button class="btn-warning" onclick="disallowRetake('${r.id}')">قفل</button>` 
                       : `<button class="btn-success" onclick="allowRetake('${r.id}')">فتح</button>`
@@ -682,7 +589,7 @@
         
         if (res.ok) {
           alert("Quiz retake allowed successfully");
-          loadResults(); // Refresh the table
+          loadResults();
         } else {
           const data = await res.json();
           alert(data.message || "Failed to allow retake");
@@ -705,7 +612,7 @@
         
         if (res.ok) {
           alert("Quiz retake disallowed successfully");
-          loadResults(); // Refresh the table
+          loadResults();
         } else {
           const data = await res.json();
           alert(data.message || "Failed to disallow retake");
@@ -732,7 +639,7 @@
         
         if (res.ok) {
           alert("Result deleted successfully");
-          loadResults(); // Refresh the table
+          loadResults();
         } else {
           const data = await res.json();
           alert(data.message || "Failed to delete result");
@@ -747,6 +654,11 @@
       localStorage.removeItem("token");
       window.location.href = "/login.html";
     }
+
+    // تحميل النتائج تلقائياً عند فتح الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      loadResults();
+    });
   </script>
 </body>
 </html>
