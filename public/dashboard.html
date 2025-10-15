@@ -346,7 +346,9 @@
 
   <script>
     const token = localStorage.getItem("token");
-    if (!token) window.location.href = "/login.html";
+    if (!token) {
+      window.location.href = "/login.html";
+    }
 
     // تعريف الإجابات الصحيحة
     const correctAnswers = {
@@ -417,8 +419,8 @@
 
     // دالة لإنشاء عرض الأسئلة والإجابات
     function createQuestionsDisplay(userAnswers) {
-      if (!userAnswers) {
-        return '<div class="questions-container"><p>No answers available</p></div>';
+      if (!userAnswers || Object.keys(userAnswers).length === 0) {
+        return '<div class="questions-container"><p>No answers available for this student</p></div>';
       }
 
       let html = '<div class="questions-container">';
@@ -429,7 +431,7 @@
         const correctAnswer = correctAnswers[questionId];
         const isCorrect = userAnswer === correctAnswer;
         
-        const userAnswerText = userAnswer ? answerOptions[questionId][userAnswer] : 'لم يتم الإجابة';
+        const userAnswerText = userAnswer ? (answerOptions[questionId][userAnswer] || 'Unknown') : 'لم يتم الإجابة';
         const correctAnswerText = answerOptions[questionId][correctAnswer];
         
         html += `
@@ -464,6 +466,11 @@
       if (questionsRow) {
         // إذا كان موجودًا بالفعل، قم بإزالته
         questionsRow.remove();
+        // تغيير نص الزر إلى "اظهار"
+        const button = document.querySelector(`tr[data-user-id="${userId}"] .toggle-questions-btn`);
+        if (button) {
+          button.textContent = 'اظهار الاسئلة بالاجابات';
+        }
       } else {
         // إذا لم يكن موجودًا، قم بإنشائه وعرضه
         const row = document.createElement('tr');
@@ -474,7 +481,7 @@
             <div class="questions-content">
               ${createQuestionsDisplay(userAnswers)}
               <div class="questions-toggle">
-                <button class="btn-info" onclick="toggleQuestions('${userId}')">اخفاء الأسئلة</button>
+                <button class="btn-info" onclick="toggleQuestions('${userId}', ${JSON.stringify(userAnswers).replace(/'/g, "\\'")})">اخفاء الأسئلة</button>
               </div>
             </div>
           </td>
@@ -482,12 +489,15 @@
         
         // إدراج الصف بعد الصف الحالي للطالب
         const userRow = document.querySelector(`tr[data-user-id="${userId}"]`);
-        userRow.parentNode.insertBefore(row, userRow.nextSibling);
-        
-        // تغيير نص الزر إلى "اخفاء"
-        const button = userRow.querySelector('.toggle-questions-btn');
-        button.textContent = 'اخفاء الاسئلة';
-        button.onclick = function() { toggleQuestions(userId); };
+        if (userRow && userRow.parentNode) {
+          userRow.parentNode.insertBefore(row, userRow.nextSibling);
+          
+          // تغيير نص الزر إلى "اخفاء"
+          const button = userRow.querySelector('.toggle-questions-btn');
+          if (button) {
+            button.textContent = 'اخفاء الاسئلة';
+          }
+        }
       }
     }
 
@@ -544,6 +554,7 @@
             
             // التأكد من وجود userAnswers
             const hasUserAnswers = r.userAnswers && Object.keys(r.userAnswers).length > 0;
+            const userAnswersJson = hasUserAnswers ? JSON.stringify(r.userAnswers).replace(/'/g, "\\'") : '{}';
             
             tbody.innerHTML += `
               <tr data-user-id="${r.id}">
@@ -555,7 +566,7 @@
                 <td>${statusBadge}</td>
                 <td class="action-cell">
                   <div class="action-buttons">
-                    <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}', ${hasUserAnswers ? JSON.stringify(r.userAnswers).replace(/'/g, "\\'") : '{}'})">
+                    <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}', ${userAnswersJson})">
                       ${hasUserAnswers ? 'اظهار الاسئلة بالاجابات' : 'لا توجد إجابات'}
                     </button>
                     ${isAllowed 
