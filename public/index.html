@@ -219,10 +219,11 @@
       
       <form id="quiz">
         <div class="question">
-          <p>1. What is the capital of France?</p>
-          <label><input type="radio" name="q1" value="A" /> Paris</label>
-          <label><input type="radio" name="q1" value="B" /> Rome</label>
-          <label><input type="radio" name="q1" value="C" /> Madrid</label>
+          <p>1. 1- Which do you think is …………………… city in the world?</p>
+          <label><input type="radio" name="q1" value="A" /> exciting</label>
+          <label><input type="radio" name="q1" value="B" /> more exciting </label>
+          <label><input type="radio" name="q1" value="C" /> most exciting</label>
+          <label><input type="radio" name="q1" value="D" /> the most exciting</label>
         </div>
         <div class="question">
           <p>2. 2 + 2 = ?</p>
@@ -246,7 +247,7 @@
   </div>
 
   <script>
-    const correctAnswers = { q1: "A", q2: "B", q3: "B" };
+    const correctAnswers = { q1: "B", q2: "B", q3: "B" };
     let timeLeft = 600; // 10 minutes in seconds
     let timerInterval;
     let quizSubmitted = false;
