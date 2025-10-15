@@ -15,6 +15,7 @@
       --border-radius: 8px;
       --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -22,6 +23,7 @@
       min-height: 100vh;
       margin: 0;
     }
+    
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -30,6 +32,7 @@
       box-shadow: var(--box-shadow);
       padding: 30px;
     }
+    
     h2 {
       color: var(--dark);
       text-align: center;
@@ -37,25 +40,162 @@
       border-bottom: 2px solid var(--primary);
       padding-bottom: 15px;
     }
-    .card { background: white; padding: 20px; border-radius: var(--border-radius); box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
-    .question { margin-bottom: 25px; background: var(--light); padding: 20px; border-radius: var(--border-radius); border-left: 4px solid var(--primary); }
-    .question p { font-weight: 600; margin-top: 0; color: var(--dark); }
-    .question label { display: block; padding: 10px; margin: 5px 0; border-radius: 5px; cursor: pointer; transition: background 0.2s; }
-    .question label:hover { background: rgba(0, 123, 255, 0.1); }
-    .result { font-size: 18px; margin-top: 20px; padding: 20px; border-radius: var(--border-radius); text-align: center; font-weight: bold; }
-    .success { background: rgba(40, 167, 69, 0.1); color: var(--success); border: 1px solid var(--success); }
-    .info { background: rgba(0, 123, 255, 0.1); color: var(--primary); border: 1px solid var(--primary); }
-    input[type="text"], input[type="tel"] {
-      width: 100%; padding: 12px 15px; margin: 10px 0; border: 1px solid #ddd;
-      border-radius: var(--border-radius); box-sizing: border-box; font-size: 16px;
+    
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
     }
-    button { padding: 12px 25px; background: var(--primary); color: white; border: none; border-radius: var(--border-radius); cursor: pointer; font-size: 16px; font-weight: 600; transition: all 0.3s; display: inline-block; }
-    button:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    .text-center { text-align: center; }
-    .hidden { display: none; }
-    .progress-bar { height: 8px; background: #e9ecef; border-radius: 4px; margin: 20px 0; overflow: hidden; }
-    .progress { height: 100%; background: var(--primary); border-radius: 4px; transition: width 0.5s; }
-    .timer { text-align: center; font-size: 18px; font-weight: bold; margin: 15px 0; color: var(--dark); }
+    
+    .question {
+      margin-bottom: 25px;
+      background: var(--light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .question p {
+      font-weight: 600;
+      margin-top: 0;
+      color: var(--dark);
+    }
+    
+    .question label {
+      display: block;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .question label:hover {
+      background: rgba(0, 123, 255, 0.1);
+    }
+    
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .success {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+    
+    .info {
+      background: rgba(0, 123, 255, 0.1);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      box-sizing: border-box;
+      font-size: 16px;
+      transition: border 0.3s;
+    }
+    
+    input[type="text"]:focus, input[type="tel"]:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+    
+    button {
+      padding: 12px 25px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .btn-success {
+      background: var(--success);
+    }
+    
+    .btn-success:hover {
+      background: #218838;
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+    }
+    
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.5s;
+    }
+    
+    .timer {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+      color: var(--dark);
+    }
+    
+    .retake-info {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid #ffc107;
+      color: #856404;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -73,185 +213,30 @@
 
     <div id="quiz-container" class="hidden">
       <div class="timer" id="timer">Time: 10:00</div>
-      <div class="progress-bar"><div class="progress" id="progress" style="width: 0%"></div></div>
+      <div class="progress-bar">
+        <div class="progress" id="progress" style="width: 0%"></div>
+      </div>
       
       <form id="quiz">
-        <!-- الأسئلة تبدأ من هنا -->
-        <div class="question"><p>1. Which do you think is …………………… city in the world?</p>
-          <label><input type="radio" name="q1" value="a"> exciting</label>
-          <label><input type="radio" name="q1" value="b"> more exciting</label>
-          <label><input type="radio" name="q1" value="c"> most exciting</label>
-          <label><input type="radio" name="q1" value="d"> the most exciting</label>
+        <div class="question">
+          <p>1. 1- Which do you think is …………………… city in the world?</p>
+          <label><input type="radio" name="q1" value="A" /> exciting</label>
+          <label><input type="radio" name="q1" value="B" /> more exciting </label>
+          <label><input type="radio" name="q1" value="C" /> most exciting</label>
+          <label><input type="radio" name="q1" value="D" /> the most exciting</label>
         </div>
-
-        <div class="question"><p>2. Going by plane is …………………… more expensive than going by bus.</p>
-          <label><input type="radio" name="q2" value="a"> a lot</label>
-          <label><input type="radio" name="q2" value="b"> a lot of</label>
-          <label><input type="radio" name="q2" value="c"> lots of</label>
-          <label><input type="radio" name="q2" value="d"> many</label>
+        <div class="question">
+          <p>2. 2 + 2 = ?</p>
+          <label><input type="radio" name="q2" value="A" /> 3</label>
+          <label><input type="radio" name="q2" value="B" /> 4</label>
+          <label><input type="radio" name="q2" value="C" /> 5</label>
         </div>
-
-        <div class="question"><p>3. Ali is as ………………………… as Sami. They are the same height.</p>
-          <label><input type="radio" name="q3" value="a"> tall</label>
-          <label><input type="radio" name="q3" value="b"> heavy</label>
-          <label><input type="radio" name="q3" value="c"> high</label>
-          <label><input type="radio" name="q3" value="d"> long</label>
+        <div class="question">
+          <p>3. Which planet is known as the Red Planet?</p>
+          <label><input type="radio" name="q3" value="A" /> Earth</label>
+          <label><input type="radio" name="q3" value="B" /> Mars</label>
+          <label><input type="radio" name="q3" value="C" /> Jupiter</label>
         </div>
-
-        <div class="question"><p>4. Perhaps I looked bad this morning, but she looked …………… .</p>
-          <label><input type="radio" name="q4" value="a"> worse</label>
-          <label><input type="radio" name="q4" value="b"> the worst</label>
-          <label><input type="radio" name="q4" value="c"> more badly</label>
-          <label><input type="radio" name="q4" value="d"> badly</label>
-        </div>
-
-        <div class="question"><p>5. Cars are twice as …………………… as they were a few years ago.</p>
-          <label><input type="radio" name="q5" value="a"> more expensive</label>
-          <label><input type="radio" name="q5" value="b"> expensive</label>
-          <label><input type="radio" name="q5" value="c"> most expensive</label>
-          <label><input type="radio" name="q5" value="d"> less expensive</label>
-        </div>
-
-        <div class="question"><p>6. The ……………………… tree in the world is in Sweden.</p>
-          <label><input type="radio" name="q6" value="a"> old</label>
-          <label><input type="radio" name="q6" value="b"> older</label>
-          <label><input type="radio" name="q6" value="c"> eldest</label>
-          <label><input type="radio" name="q6" value="d"> oldest</label>
-        </div>
-
-        <div class="question"><p>7. Climbing is the ………………………. dangerous sport in the world.</p>
-          <label><input type="radio" name="q7" value="a"> more</label>
-          <label><input type="radio" name="q7" value="b"> most</label>
-          <label><input type="radio" name="q7" value="c"> less</label>
-          <label><input type="radio" name="q7" value="d"> as</label>
-        </div>
-
-        <div class="question"><p>8. Climbing is ………………………………. than cycling.</p>
-          <label><input type="radio" name="q8" value="a"> more dangerous</label>
-          <label><input type="radio" name="q8" value="b"> most dangerous</label>
-          <label><input type="radio" name="q8" value="c"> so dangerous</label>
-          <label><input type="radio" name="q8" value="d"> as dangerous</label>
-        </div>
-
-        <div class="question"><p>9. Everest is the …………………………… mountain in the world.</p>
-          <label><input type="radio" name="q9" value="a"> high</label>
-          <label><input type="radio" name="q9" value="b"> higher</label>
-          <label><input type="radio" name="q9" value="c"> highest</label>
-          <label><input type="radio" name="q9" value="d"> highly</label>
-        </div>
-
-        <div class="question"><p>10. London isn’t …………….. hot as Cairo.</p>
-          <label><input type="radio" name="q10" value="a"> so</label>
-          <label><input type="radio" name="q10" value="b"> very</label>
-          <label><input type="radio" name="q10" value="c"> highly</label>
-          <label><input type="radio" name="q10" value="d"> a lot</label>
-        </div>
-
-        <div class="question"><p>11. Everest is ………………………. than Kilimanjaro.</p>
-          <label><input type="radio" name="q11" value="a"> high</label>
-          <label><input type="radio" name="q11" value="b"> higher</label>
-          <label><input type="radio" name="q11" value="c"> highest</label>
-          <label><input type="radio" name="q11" value="d"> highly</label>
-        </div>
-
-        <div class="question"><p>12. The …………………… place in the ocean is called Challenger Deep.</p>
-          <label><input type="radio" name="q12" value="a"> deepest</label>
-          <label><input type="radio" name="q12" value="b"> deep</label>
-          <label><input type="radio" name="q12" value="c"> deeper</label>
-          <label><input type="radio" name="q12" value="d"> depth</label>
-        </div>
-
-        <div class="question"><p>13. The Pacific Ocean is the ……………………………. ocean in the world.</p>
-          <label><input type="radio" name="q13" value="a"> biggest</label>
-          <label><input type="radio" name="q13" value="b"> bigger</label>
-          <label><input type="radio" name="q13" value="c"> big</label>
-          <label><input type="radio" name="q13" value="d"> tallest</label>
-        </div>
-
-        <div class="question"><p>14. The warmer the weather, the ……………………………. I feel.</p>
-          <label><input type="radio" name="q14" value="a"> good</label>
-          <label><input type="radio" name="q14" value="b"> better</label>
-          <label><input type="radio" name="q14" value="c"> best</label>
-          <label><input type="radio" name="q14" value="d"> more good</label>
-        </div>
-
-        <div class="question"><p>15. Dalia is the same …………………………….. as Diana.</p>
-          <label><input type="radio" name="q15" value="a"> old</label>
-          <label><input type="radio" name="q15" value="b"> young</label>
-          <label><input type="radio" name="q15" value="c"> age</label>
-          <label><input type="radio" name="q15" value="d"> older</label>
-        </div>
-
-        <div class="question"><p>16. Sara is the ………………………….. of the two sisters.</p>
-          <label><input type="radio" name="q16" value="a"> young</label>
-          <label><input type="radio" name="q16" value="b"> younger</label>
-          <label><input type="radio" name="q16" value="c"> youngest</label>
-          <label><input type="radio" name="q16" value="d"> more young</label>
-        </div>
-
-        <div class="question"><p>17. Giraffes are ………………………………. of all animals.</p>
-          <label><input type="radio" name="q17" value="a"> tall</label>
-          <label><input type="radio" name="q17" value="b"> taller</label>
-          <label><input type="radio" name="q17" value="c"> the tallest</label>
-          <label><input type="radio" name="q17" value="d"> as tall</label>
-        </div>
-
-        <div class="question"><p>18. Today is ………………………….. hotter than yesterday.</p>
-          <label><input type="radio" name="q18" value="a"> a little</label>
-          <label><input type="radio" name="q18" value="b"> little</label>
-          <label><input type="radio" name="q18" value="c"> less</label>
-          <label><input type="radio" name="q18" value="d"> the least</label>
-        </div>
-
-        <div class="question"><p>19. Ayman is the ………………………….. boy in our class.</p>
-          <label><input type="radio" name="q19" value="a"> highest</label>
-          <label><input type="radio" name="q19" value="b"> longest</label>
-          <label><input type="radio" name="q19" value="c"> tallest</label>
-          <label><input type="radio" name="q19" value="d"> deepest</label>
-        </div>
-
-        <div class="question"><p>20. I'm very clever at cooking, but my mother is ……… cook I've ever known.</p>
-          <label><input type="radio" name="q20" value="a"> cleverer</label>
-          <label><input type="radio" name="q20" value="b"> clever</label>
-          <label><input type="radio" name="q20" value="c"> less clever</label>
-          <label><input type="radio" name="q20" value="d"> the cleverest</label>
-        </div>
-
-        <div class="question"><p>21. I love all my family, but I love my father ………..….. of all.</p>
-          <label><input type="radio" name="q21" value="a"> more</label>
-          <label><input type="radio" name="q21" value="b"> much</label>
-          <label><input type="radio" name="q21" value="c"> the most</label>
-          <label><input type="radio" name="q21" value="d"> most</label>
-        </div>
-
-        <div class="question"><p>22. Samy speaks French …………….….. than he writes it.</p>
-          <label><input type="radio" name="q22" value="a"> fewer</label>
-          <label><input type="radio" name="q22" value="b"> worse</label>
-          <label><input type="radio" name="q22" value="c"> fewest</label>
-          <label><input type="radio" name="q22" value="d"> worst</label>
-        </div>
-
-        <div class="question"><p>23. Going by plane is ………….…… more expensive than going by bus.</p>
-          <label><input type="radio" name="q23" value="a"> a lot</label>
-          <label><input type="radio" name="q23" value="b"> a lot of</label>
-          <label><input type="radio" name="q23" value="c"> lots of</label>
-          <label><input type="radio" name="q23" value="d"> many</label>
-        </div>
-
-        <div class="question"><p>24. The teacher told us ……….…….. an interesting story.</p>
-          <label><input type="radio" name="q24" value="a"> so</label>
-          <label><input type="radio" name="q24" value="b"> thus</label>
-          <label><input type="radio" name="q24" value="c"> very</label>
-          <label><input type="radio" name="q24" value="d"> such</label>
-        </div>
-
-        <div class="question"><p>25. Benha is the nearest town ………….. Cairo.</p>
-          <label><input type="radio" name="q25" value="a"> at</label>
-          <label><input type="radio" name="q25" value="b"> from</label>
-          <label><input type="radio" name="q25" value="c"> to</label>
-          <label><input type="radio" name="q25" value="d"> in</label>
-        </div>
-
         <div class="text-center">
           <button type="button" onclick="submitQuiz()" id="submit-btn">Submit Quiz</button>
         </div>
@@ -262,54 +247,185 @@
   </div>
 
   <script>
-    // الإجابات الصحيحة
-    const correctAnswers = {
-      q1:"d", q2:"a", q3:"a", q4:"a", q5:"b", q6:"d", q7:"b", q8:"a", q9:"c", q10:"a",
-      q11:"b", q12:"a", q13:"a", q14:"b", q15:"c", q16:"b", q17:"c", q18:"a", q19:"c",
-      q20:"d", q21:"c", q22:"b", q23:"a", q24:"d", q25:"c"
-    };
-
-    let timeLeft = 600;
+    const correctAnswers = { q1: "B", q2: "B", q3: "B" };
+    let timeLeft = 600; // 10 minutes in seconds
     let timerInterval;
     let quizSubmitted = false;
+
+    // Check if user already submitted or if retake is allowed
+    async function checkRetakeStatus() {
+      const userPhone = localStorage.getItem('userPhone');
+      if (userPhone) {
+        try {
+          const response = await fetch(`/api/check-retake/${userPhone}`);
+          const data = await response.json();
+          
+          if (response.ok && data.allowedRetake) {
+            // Clear previous submission if retake is allowed
+            localStorage.removeItem('quizSubmitted');
+            document.getElementById('user-info').innerHTML = `
+              <div class="retake-info">
+                <p>You are allowed to retake the quiz!</p>
+                <p>Please enter your information and start the quiz.</p>
+              </div>
+              <h3>Enter Your Information</h3>
+              <input type="text" id="name" placeholder="Enter your full name" value="${localStorage.getItem('userName') || ''}" />
+              <input type="tel" id="phone" placeholder="Enter your phone number" value="${userPhone}" />
+              <div class="text-center">
+                <button onclick="startQuiz()">Start Quiz</button>
+              </div>
+            `;
+          } else if (localStorage.getItem('quizSubmitted')) {
+            document.getElementById('user-info').innerHTML = `
+              <div class="result info">
+                <p>You have already submitted the quiz.</p>
+                <p>Please contact the administrator if you need to retake it.</p>
+              </div>
+            `;
+          }
+        } catch (error) {
+          console.error("Error checking retake status:", error);
+          // If there's an error, fall back to the original check
+          if (localStorage.getItem('quizSubmitted')) {
+            document.getElementById('user-info').innerHTML = `
+              <div class="result info">
+                <p>You have already submitted the quiz.</p>
+                <p>Please contact the administrator if you need to retake it.</p>
+              </div>
+            `;
+          }
+        }
+      } else if (localStorage.getItem('quizSubmitted')) {
+        document.getElementById('user-info').innerHTML = `
+          <div class="result info">
+            <p>You have already submitted the quiz.</p>
+            <p>Please contact the administrator if you need to retake it.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Check retake status when page loads
+    checkRetakeStatus();
 
     function startQuiz() {
       const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
-      if (!name || !phone) { alert("Please enter your name and phone number"); return; }
+      
+      if (!name || !phone) {
+        alert("Please enter your name and phone number");
+        return;
+      }
+      
       localStorage.setItem("userName", name);
       localStorage.setItem("userPhone", phone);
+      
       document.getElementById("user-info").classList.add("hidden");
       document.getElementById("quiz-container").classList.remove("hidden");
+      
+      // Start timer
       startTimer();
-      document.querySelectorAll('input[type="radio"]').forEach(r => r.addEventListener('change', updateProgress));
+      
+      // Update progress bar as questions are answered
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', updateProgress);
+      });
     }
 
     function startTimer() {
       timerInterval = setInterval(() => {
-        timeLeft--; updateTimerDisplay();
-        if (timeLeft <= 0) { clearInterval(timerInterval); submitQuiz(); }
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
       }, 1000);
     }
+
     function updateTimerDisplay() {
-      const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
-      document.getElementById('timer').textContent = `Time: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
+
     function updateProgress() {
-      const total = Object.keys(correctAnswers).length;
-      const answered = document.querySelectorAll('input[type="radio"]:checked').length;
-      document.getElementById('progress').style.width = `${(answered/total)*100}%`;
+      const totalQuestions = Object.keys(correctAnswers).length;
+      const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+      const progress = (answeredQuestions / totalQuestions) * 100;
+      document.getElementById('progress').style.width = `${progress}%`;
     }
 
     async function submitQuiz() {
-      if (quizSubmitted) return; quizSubmitted = true; clearInterval(timerInterval);
-      const form = document.getElementById("quiz"); const data = new FormData(form);
+      if (quizSubmitted) return;
+      
+      quizSubmitted = true;
+      clearInterval(timerInterval);
+      
+      const form = document.getElementById("quiz");
+      const formData = new FormData(form);
       let correct = 0, wrong = 0;
-      Object.keys(correctAnswers).forEach(q => { if (data.get(q) === correctAnswers[q]) correct++; else wrong++; });
+      
+      Object.keys(correctAnswers).forEach(q => {
+        const ans = formData.get(q);
+        if (ans === correctAnswers[q]) correct++; 
+        else wrong++;
+      });
+      
       const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
+      
+      // Display result
       const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = `<h3>Quiz Result</h3><p>Score: ${score}%</p><p>Correct Answers: ${correct}</p><p>Wrong Answers: ${wrong}</p>`;
-      if (score >= 70) resultDiv.classList.add("success"); else resultDiv.classList.add("info");
+      
+      try {
+        const response = await fetch("/api/submit", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            name: localStorage.getItem("userName"),
+            phone: localStorage.getItem("userPhone"),
+            correct, 
+            wrong, 
+            score
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          resultDiv.innerHTML = `
+            <h3>Quiz Result</h3>
+            <p>Score: ${score}%</p>
+            <p>Correct Answers: ${correct}</p>
+            <p>Wrong Answers: ${wrong}</p>
+            <p>Thank you for completing the quiz!</p>
+          `;
+          
+          // Mark as submitted in localStorage
+          localStorage.setItem('quizSubmitted', 'true');
+        } else {
+          resultDiv.innerHTML = `
+            <h3>Error</h3>
+            <p>${data.message || 'Failed to submit quiz'}</p>
+          `;
+          resultDiv.classList.add("info");
+        }
+      } catch (error) {
+        console.error("Error submitting quiz:", error);
+        resultDiv.innerHTML = `
+          <h3>Network Error</h3>
+          <p>Please try again later</p>
+        `;
+        resultDiv.classList.add("info");
+      }
+      
+      if (score >= 70) {
+        resultDiv.classList.add("success");
+      } else {
+        resultDiv.classList.add("info");
+      }
+      
       resultDiv.classList.remove("hidden");
       document.getElementById("quiz-container").classList.add("hidden");
       document.getElementById("submit-btn").disabled = true;
