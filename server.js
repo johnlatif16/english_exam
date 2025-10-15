@@ -46,7 +46,9 @@ app.post("/api/login", (req, res) => {
 // API to track user attempts
 app.post("/api/track-attempt", async (req, res) => {
   try {
-    const { phone, action } = req.body; // action: 'start', 'refresh', 'submit'
+    const { phone, action } = req.body; // action: 'start', 'refresh', 'submit', 'refresh_auto_submit'
+    
+    console.log(`Tracking attempt: ${phone} - ${action}`);
     
     await db.collection("attempts").add({
       phone,
@@ -67,6 +69,8 @@ app.get("/api/attempts/:phone", async (req, res) => {
   try {
     const { phone } = req.params;
     
+    console.log(`Getting attempts for phone: ${phone}`);
+    
     const snapshot = await db.collection("attempts")
       .where("phone", "==", phone)
       .orderBy("timestamp", "desc")
@@ -74,8 +78,11 @@ app.get("/api/attempts/:phone", async (req, res) => {
     
     const attempts = snapshot.docs.map(doc => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate?.() || doc.data().timestamp
     }));
+    
+    console.log(`Found ${attempts.length} attempts for ${phone}`);
     
     res.json(attempts);
   } catch (error) {
@@ -88,12 +95,18 @@ app.post("/api/submit", async (req, res) => {
   try {
     const { name, phone, correct, wrong, score, userAnswers } = req.body;
     
+    console.log(`Submit request for: ${name}, ${phone}, Score: ${score}`);
+    
     // Track submission attempt
-    await db.collection("attempts").add({
-      phone,
-      action: 'submit',
-      timestamp: new Date()
-    });
+    try {
+      await db.collection("attempts").add({
+        phone,
+        action: 'submit',
+        timestamp: new Date()
+      });
+    } catch (trackError) {
+      console.error("Error tracking submission:", trackError);
+    }
     
     // Check if user already submitted
     const existingSnapshot = await db.collection("results")
@@ -101,7 +114,6 @@ app.post("/api/submit", async (req, res) => {
       .get();
     
     if (!existingSnapshot.empty) {
-      // Check if retake is allowed
       const results = existingSnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
@@ -117,7 +129,6 @@ app.post("/api/submit", async (req, res) => {
         });
       }
       
-      // If retake is allowed, delete old results for this phone
       const deletePromises = existingSnapshot.docs.map(doc => doc.ref.delete());
       await Promise.all(deletePromises);
     }
@@ -145,7 +156,8 @@ app.get("/api/results", verifyToken, async (req, res) => {
     const snapshot = await db.collection("results").orderBy("timestamp", "desc").get();
     const results = snapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate?.() || doc.data().timestamp
     }));
     res.json(results);
   } catch (error) {
@@ -159,13 +171,11 @@ app.delete("/api/results/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Verify the result exists
     const doc = await db.collection("results").doc(id).get();
     if (!doc.exists) {
       return res.status(404).json({ message: "Result not found" });
     }
     
-    // Delete the result
     await db.collection("results").doc(id).delete();
     
     res.json({ message: "Result deleted successfully" });
@@ -180,13 +190,11 @@ app.post("/api/results/:id/allow-retake", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Verify the result exists
     const doc = await db.collection("results").doc(id).get();
     if (!doc.exists) {
       return res.status(404).json({ message: "Result not found" });
     }
     
-    // Update the result to mark it as allowed for retake
     await db.collection("results").doc(id).update({
       allowedRetake: true,
       retakeAllowedAt: new Date()
@@ -204,13 +212,11 @@ app.post("/api/results/:id/disallow-retake", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Verify the result exists
     const doc = await db.collection("results").doc(id).get();
     if (!doc.exists) {
       return res.status(404).json({ message: "Result not found" });
     }
     
-    // Update the result to mark it as not allowed for retake
     await db.collection("results").doc(id).update({
       allowedRetake: false,
       retakeDisallowedAt: new Date()
@@ -228,7 +234,6 @@ app.get("/api/check-retake/:phone", async (req, res) => {
   try {
     const { phone } = req.params;
     
-    // Find results by phone number
     const snapshot = await db.collection("results")
       .where("phone", "==", phone)
       .get();
@@ -240,10 +245,10 @@ app.get("/api/check-retake/:phone", async (req, res) => {
       });
     }
     
-    // Get the most recent result
     const results = snapshot.docs.map(doc => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate?.() || doc.data().timestamp
     }));
     
     const latestResult = results.sort((a, b) => 
