@@ -297,6 +297,58 @@
     .questions-content {
       padding: 20px;
     }
+    
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .attempt-stats {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+    
+    .attempt-stats p {
+      margin: 5px 0;
+    }
+    
+    .attempt-history {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #dee2e6;
+      border-radius: var(--border-radius);
+      padding: 10px;
+    }
+    
+    .attempt-item {
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+    }
+    
+    .attempt-item:last-child {
+      border-bottom: none;
+    }
   </style>
 </head>
 <body>
@@ -508,6 +560,65 @@
       }
     }
 
+    // دالة لعرض محاولات المستخدم
+    async function showUserAttempts(userId, phone) {
+      try {
+        const response = await fetch(`/api/attempts/${phone}`);
+        const attempts = await response.json();
+        
+        if (response.ok) {
+          const attemptStats = calculateAttemptStats(attempts);
+          
+          // إنشاء نافذة عرض المحاولات
+          const modal = document.createElement('div');
+          modal.className = 'modal';
+          
+          modal.innerHTML = `
+            <div class="modal-content">
+              <h3>User Attempts Statistics - ${phone}</h3>
+              <div class="attempt-stats">
+                <p><strong>Total Attempts:</strong> ${attemptStats.total}</p>
+                <p><strong>Started:</strong> ${attemptStats.started}</p>
+                <p><strong>Refreshed:</strong> ${attemptStats.refreshed}</p>
+                <p><strong>Submitted:</strong> ${attemptStats.submitted}</p>
+                <p><strong>Auto-submitted:</strong> ${attemptStats.autoSubmitted}</p>
+              </div>
+              <h4>Attempt History</h4>
+              <div class="attempt-history">
+                ${attempts.map(attempt => `
+                  <div class="attempt-item">
+                    <strong>${attempt.action}</strong> - 
+                    ${new Date(attempt.timestamp?.toDate?.() || attempt.timestamp).toLocaleString()}
+                  </div>
+                `).join('')}
+              </div>
+              <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-primary" onclick="this.closest('.modal').remove()">Close</button>
+              </div>
+            </div>
+          `;
+          
+          document.body.appendChild(modal);
+        }
+      } catch (error) {
+        console.error("Error loading attempts:", error);
+        alert("Failed to load user attempts");
+      }
+    }
+
+    // دالة لحساب إحصائيات المحاولات
+    function calculateAttemptStats(attempts) {
+      const stats = {
+        total: attempts.length,
+        started: attempts.filter(a => a.action === 'start').length,
+        refreshed: attempts.filter(a => a.action === 'refresh').length,
+        submitted: attempts.filter(a => a.action === 'submit').length,
+        autoSubmitted: attempts.filter(a => a.action === 'refresh_auto_submit').length
+      };
+      
+      return stats;
+    }
+
     async function loadResults() {
       try {
         const res = await fetch("/api/results", {
@@ -574,6 +685,9 @@
                 <td>${statusBadge}</td>
                 <td class="action-cell">
                   <div class="action-buttons">
+                    <button class="btn-info" onclick="showUserAttempts('${r.id}', '${r.phone}')">
+                      عرض المحاولات
+                    </button>
                     <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}')">
                       ${hasUserAnswers ? 'اظهار الاسئلة بالاجابات' : 'لا توجد إجابات'}
                     </button>
