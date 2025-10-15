@@ -1,415 +1,435 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار القواعد الإنجليزية</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-        .question {
-            margin-bottom: 25px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            background-color: #fafafa;
-        }
-        .question-number {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #3498db;
-        }
-        .options {
-            margin-right: 20px;
-        }
-        .option {
-            margin-bottom: 8px;
-        }
-        button {
-            display: block;
-            width: 200px;
-            margin: 30px auto;
-            padding: 12px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        .result {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            display: none;
-        }
-        .correct {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Quiz</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+      --success: #28a745;
+      --danger: #dc3545;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      min-height: 100vh;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+    }
+    
+    h2 {
+      color: var(--dark);
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 15px;
+    }
+    
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+    
+    .question {
+      margin-bottom: 25px;
+      background: var(--light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .question p {
+      font-weight: 600;
+      margin-top: 0;
+      color: var(--dark);
+    }
+    
+    .question label {
+      display: block;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .question label:hover {
+      background: rgba(0, 123, 255, 0.1);
+    }
+    
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .success {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+    
+    .info {
+      background: rgba(0, 123, 255, 0.1);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      box-sizing: border-box;
+      font-size: 16px;
+      transition: border 0.3s;
+    }
+    
+    input[type="text"]:focus, input[type="tel"]:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+    
+    button {
+      padding: 12px 25px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .btn-success {
+      background: var(--success);
+    }
+    
+    .btn-success:hover {
+      background: #218838;
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+    }
+    
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.5s;
+    }
+    
+    .timer {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+      color: var(--dark);
+    }
+    
+    .retake-info {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid #ffc107;
+      color: #856404;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>اختبار القواعد الإنجليزية (Comparatives & Superlatives)</h1>
-        
-        <div id="quiz">
-            <div class="question">
-                <div class="question-number">1- Which do you think is …………………… city in the world?</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q1" value="a"> a) exciting</div>
-                    <div class="option"><input type="radio" name="q1" value="b"> b) more exciting</div>
-                    <div class="option"><input type="radio" name="q1" value="c"> c) most exciting</div>
-                    <div class="option"><input type="radio" name="q1" value="d"> d) the most exciting</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">2- Going by plane is …………………… more expensive than going by bus.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q2" value="a"> a) a lot</div>
-                    <div class="option"><input type="radio" name="q2" value="b"> b) a lot of</div>
-                    <div class="option"><input type="radio" name="q2" value="c"> c) lots of</div>
-                    <div class="option"><input type="radio" name="q2" value="d"> d) many</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">3- Ali is as ………………………… as Sami. They are the same height.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q3" value="a"> a) tall</div>
-                    <div class="option"><input type="radio" name="q3" value="b"> b) heavy</div>
-                    <div class="option"><input type="radio" name="q3" value="c"> c) high</div>
-                    <div class="option"><input type="radio" name="q3" value="d"> d) long</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">4- Perhaps I looked bad this morning, but she looked …………… .</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q4" value="a"> a) worse</div>
-                    <div class="option"><input type="radio" name="q4" value="b"> b) the worst</div>
-                    <div class="option"><input type="radio" name="q4" value="c"> c) more badly</div>
-                    <div class="option"><input type="radio" name="q4" value="d"> d) badly</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">5- Cars are twice as …………………… . as they were a few years ago.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q5" value="a"> a) more expensive</div>
-                    <div class="option"><input type="radio" name="q5" value="b"> b) expensive</div>
-                    <div class="option"><input type="radio" name="q5" value="c"> c) most expensive</div>
-                    <div class="option"><input type="radio" name="q5" value="d"> d) less expensive</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">6- The ……………………… tree in the world is in Sweden.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q6" value="a"> a) old</div>
-                    <div class="option"><input type="radio" name="q6" value="b"> b) older</div>
-                    <div class="option"><input type="radio" name="q6" value="c"> c) eldest</div>
-                    <div class="option"><input type="radio" name="q6" value="d"> d) oldest</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">7- Climbing is the ………………………. dangerous sport in the world.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q7" value="a"> a) more</div>
-                    <div class="option"><input type="radio" name="q7" value="b"> b) most</div>
-                    <div class="option"><input type="radio" name="q7" value="c"> c) less</div>
-                    <div class="option"><input type="radio" name="q7" value="d"> d) as</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">8- Climbing is ………………………………. than cycling.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q8" value="a"> a) more dangerous</div>
-                    <div class="option"><input type="radio" name="q8" value="b"> b) most dangerous</div>
-                    <div class="option"><input type="radio" name="q8" value="c"> c) so dangerous</div>
-                    <div class="option"><input type="radio" name="q8" value="d"> d) as dangerous</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">9- Everest is the …………………………… mountain in the world.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q9" value="a"> a) high</div>
-                    <div class="option"><input type="radio" name="q9" value="b"> b) higher</div>
-                    <div class="option"><input type="radio" name="q9" value="c"> c) highest</div>
-                    <div class="option"><input type="radio" name="q9" value="d"> d) highly</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">10- London isn’t …………….. hot as Cairo.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q10" value="a"> a) so</div>
-                    <div class="option"><input type="radio" name="q10" value="b"> b) very</div>
-                    <div class="option"><input type="radio" name="q10" value="c"> c) highly</div>
-                    <div class="option"><input type="radio" name="q10" value="d"> d) a lot</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">11- Everest is ………………………. than Kilimanjaro.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q11" value="a"> a) high</div>
-                    <div class="option"><input type="radio" name="q11" value="b"> b) higher</div>
-                    <div class="option"><input type="radio" name="q11" value="c"> c) highest</div>
-                    <div class="option"><input type="radio" name="q11" value="d"> d) highly</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">12- The …………………… place in the ocean is called Challenger Deep.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q12" value="a"> a) deepest</div>
-                    <div class="option"><input type="radio" name="q12" value="b"> b) deep</div>
-                    <div class="option"><input type="radio" name="q12" value="c"> c) deeper</div>
-                    <div class="option"><input type="radio" name="q12" value="d"> d) depth</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">13- The Pacific Ocean is the …………………………….ocean in the world.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q13" value="a"> a) biggest</div>
-                    <div class="option"><input type="radio" name="q13" value="b"> b) bigger</div>
-                    <div class="option"><input type="radio" name="q13" value="c"> c) big</div>
-                    <div class="option"><input type="radio" name="q13" value="d"> d) tallest</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">14- The warmer the weather, the ……………………………. I feel.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q14" value="a"> a) good</div>
-                    <div class="option"><input type="radio" name="q14" value="b"> b) better</div>
-                    <div class="option"><input type="radio" name="q14" value="c"> c) best</div>
-                    <div class="option"><input type="radio" name="q14" value="d"> d) more good</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">15- Dalia is the same …………………………….. as Diana.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q15" value="a"> a) old</div>
-                    <div class="option"><input type="radio" name="q15" value="b"> b) young</div>
-                    <div class="option"><input type="radio" name="q15" value="c"> c) age</div>
-                    <div class="option"><input type="radio" name="q15" value="d"> d) older</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">16- Sara is the ………………………….. of the two sisters.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q16" value="a"> a) young</div>
-                    <div class="option"><input type="radio" name="q16" value="b"> b) younger</div>
-                    <div class="option"><input type="radio" name="q16" value="c"> c) youngest</div>
-                    <div class="option"><input type="radio" name="q16" value="d"> d) more young</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">17- Giraffes are ………………………………. of all animals.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q17" value="a"> a) tall</div>
-                    <div class="option"><input type="radio" name="q17" value="b"> b) taller</div>
-                    <div class="option"><input type="radio" name="q17" value="c"> c) the tallest</div>
-                    <div class="option"><input type="radio" name="q17" value="d"> d) as tall</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">18- Today is ………………………….. hotter than yesterday.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q18" value="a"> a) a little</div>
-                    <div class="option"><input type="radio" name="q18" value="b"> b) little</div>
-                    <div class="option"><input type="radio" name="q18" value="c"> c) less</div>
-                    <div class="option"><input type="radio" name="q18" value="d"> d) the least</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">19- Ayman is the ………………………….. boy in our class.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q19" value="a"> a) highest</div>
-                    <div class="option"><input type="radio" name="q19" value="b"> b) longest</div>
-                    <div class="option"><input type="radio" name="q19" value="c"> c) tallest</div>
-                    <div class="option"><input type="radio" name="q19" value="d"> d) deepest</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">20- I'm very clever at cooking, but my mother is ……… cook I've ever known.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q20" value="a"> a) cleverer</div>
-                    <div class="option"><input type="radio" name="q20" value="b"> b) clever</div>
-                    <div class="option"><input type="radio" name="q20" value="c"> c) less clever</div>
-                    <div class="option"><input type="radio" name="q20" value="d"> d) the cleverest</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">21- I love all my family, but I love my father ………..….. of all.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q21" value="a"> a) more</div>
-                    <div class="option"><input type="radio" name="q21" value="b"> b) much</div>
-                    <div class="option"><input type="radio" name="q21" value="c"> c) the most</div>
-                    <div class="option"><input type="radio" name="q21" value="d"> d) most</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">22- Samy speaks French …………….….. than he writes it.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q22" value="a"> a) fewer</div>
-                    <div class="option"><input type="radio" name="q22" value="b"> b) worse</div>
-                    <div class="option"><input type="radio" name="q22" value="c"> c) fewest</div>
-                    <div class="option"><input type="radio" name="q22" value="d"> d) worst</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">23- Going by plane is ………….…… more expensive than going by bus.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q23" value="a"> a) a lot</div>
-                    <div class="option"><input type="radio" name="q23" value="b"> b) a lot of</div>
-                    <div class="option"><input type="radio" name="q23" value="c"> c) lots of</div>
-                    <div class="option"><input type="radio" name="q23" value="d"> d) many</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">24- The teacher told us ……….…….. an interesting story.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q24" value="a"> a) so</div>
-                    <div class="option"><input type="radio" name="q24" value="b"> b) thus</div>
-                    <div class="option"><input type="radio" name="q24" value="c"> c) very</div>
-                    <div class="option"><input type="radio" name="q24" value="d"> d) such</div>
-                </div>
-            </div>
-            
-            <div class="question">
-                <div class="question-number">25- Benha is the nearest town ………….. Cairo.</div>
-                <div class="options">
-                    <div class="option"><input type="radio" name="q25" value="a"> a) at</div>
-                    <div class="option"><input type="radio" name="q25" value="b"> b) from</div>
-                    <div class="option"><input type="radio" name="q25" value="c"> c) to</div>
-                    <div class="option"><input type="radio" name="q25" value="d"> d) in</div>
-                </div>
-            </div>
-        </div>
-        
-        <button onclick="checkAnswers()">تحقق من الإجابات</button>
-        
-        <div id="result" class="result"></div>
+  <div class="container">
+    <h2>Student Quiz</h2>
+    
+    <div id="user-info" class="card">
+      <h3>Enter Your Information</h3>
+      <input type="text" id="name" placeholder="Enter your full name" />
+      <input type="tel" id="phone" placeholder="Enter your phone number" />
+      <div class="text-center">
+        <button onclick="startQuiz()">Start Quiz</button>
+      </div>
     </div>
 
-    <script>
-        function checkAnswers() {
-            // الإجابات الصحيحة
-            const correctAnswers = {
-                q1: "d",
-                q2: "a",
-                q3: "a",
-                q4: "a",
-                q5: "b",
-                q6: "d",
-                q7: "b",
-                q8: "a",
-                q9: "c",
-                q10: "a",
-                q11: "b",
-                q12: "a",
-                q13: "a",
-                q14: "b",
-                q15: "c",
-                q16: "b",
-                q17: "c",
-                q18: "a",
-                q19: "c",
-                q20: "d",
-                q21: "c",
-                q22: "b",
-                q23: "a",
-                q24: "d",
-                q25: "c"
-            };
-            
-            let score = 0;
-            const totalQuestions = 25;
-            
-            // التحقق من كل سؤال
-            for (let i = 1; i <= totalQuestions; i++) {
-                const questionName = "q" + i;
-                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-                
-                if (selectedOption) {
-                    if (selectedOption.value === correctAnswers[questionName]) {
-                        score++;
-                        selectedOption.parentElement.parentElement.style.backgroundColor = "#d4edda";
-                    } else {
-                        selectedOption.parentElement.parentElement.style.backgroundColor = "#f8d7da";
-                    }
-                }
-            }
-            
-            // عرض النتيجة
-            const resultElement = document.getElementById("result");
-            resultElement.style.display = "block";
-            
-            if (score === totalQuestions) {
-                resultElement.textContent = `ممتاز! لقد أجبت على جميع الأسئلة بشكل صحيح (${score}/${totalQuestions})`;
-                resultElement.className = "result correct";
-            } else if (score >= totalQuestions * 0.7) {
-                resultElement.textContent = `جيد جداً! لقد أجبت بشكل صحيح على ${score} من أصل ${totalQuestions} أسئلة`;
-                resultElement.className = "result correct";
-            } else if (score >= totalQuestions * 0.5) {
-                resultElement.textContent = `ليس سيئاً! لقد أجبت بشكل صحيح على ${score} من أصل ${totalQuestions} أسئلة`;
-                resultElement.className = "result correct";
-            } else {
-                resultElement.textContent = `تحتاج للمزيد من الممارسة! لقد أجبت بشكل صحيح على ${score} من أصل ${totalQuestions} أسئلة`;
-                resultElement.className = "result incorrect";
-            }
-            
-            // التمرير إلى النتيجة
-            resultElement.scrollIntoView({ behavior: 'smooth' });
+    <div id="quiz-container" class="hidden">
+      <div class="timer" id="timer">Time: 10:00</div>
+      <div class="progress-bar">
+        <div class="progress" id="progress" style="width: 0%"></div>
+      </div>
+      
+      <form id="quiz">
+        <div class="question">
+          <p>1. 1- Which do you think is …………………… city in the world?</p>
+          <label><input type="radio" name="q1" value="A" /> exciting</label>
+          <label><input type="radio" name="q1" value="B" /> more exciting </label>
+          <label><input type="radio" name="q1" value="C" /> most exciting</label>
+          <label><input type="radio" name="q1" value="D" /> the most exciting</label>
+        </div>
+        <div class="question">
+          <p>2. 2 + 2 = ?</p>
+          <label><input type="radio" name="q2" value="A" /> 3</label>
+          <label><input type="radio" name="q2" value="B" /> 4</label>
+          <label><input type="radio" name="q2" value="C" /> 5</label>
+        </div>
+        <div class="question">
+          <p>3. Which planet is known as the Red Planet?</p>
+          <label><input type="radio" name="q3" value="A" /> Earth</label>
+          <label><input type="radio" name="q3" value="B" /> Mars</label>
+          <label><input type="radio" name="q3" value="C" /> Jupiter</label>
+        </div>
+        <div class="text-center">
+          <button type="button" onclick="submitQuiz()" id="submit-btn">Submit Quiz</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="result hidden" id="result"></div>
+  </div>
+
+  <script>
+    const correctAnswers = { q1: "B", q2: "B", q3: "B" };
+    let timeLeft = 600; // 10 minutes in seconds
+    let timerInterval;
+    let quizSubmitted = false;
+
+    // Check if user already submitted or if retake is allowed
+    async function checkRetakeStatus() {
+      const userPhone = localStorage.getItem('userPhone');
+      if (userPhone) {
+        try {
+          const response = await fetch(`/api/check-retake/${userPhone}`);
+          const data = await response.json();
+          
+          if (response.ok && data.allowedRetake) {
+            // Clear previous submission if retake is allowed
+            localStorage.removeItem('quizSubmitted');
+            document.getElementById('user-info').innerHTML = `
+              <div class="retake-info">
+                <p>You are allowed to retake the quiz!</p>
+                <p>Please enter your information and start the quiz.</p>
+              </div>
+              <h3>Enter Your Information</h3>
+              <input type="text" id="name" placeholder="Enter your full name" value="${localStorage.getItem('userName') || ''}" />
+              <input type="tel" id="phone" placeholder="Enter your phone number" value="${userPhone}" />
+              <div class="text-center">
+                <button onclick="startQuiz()">Start Quiz</button>
+              </div>
+            `;
+          } else if (localStorage.getItem('quizSubmitted')) {
+            document.getElementById('user-info').innerHTML = `
+              <div class="result info">
+                <p>You have already submitted the quiz.</p>
+                <p>Please contact the administrator if you need to retake it.</p>
+              </div>
+            `;
+          }
+        } catch (error) {
+          console.error("Error checking retake status:", error);
+          // If there's an error, fall back to the original check
+          if (localStorage.getItem('quizSubmitted')) {
+            document.getElementById('user-info').innerHTML = `
+              <div class="result info">
+                <p>You have already submitted the quiz.</p>
+                <p>Please contact the administrator if you need to retake it.</p>
+              </div>
+            `;
+          }
         }
-    </script>
+      } else if (localStorage.getItem('quizSubmitted')) {
+        document.getElementById('user-info').innerHTML = `
+          <div class="result info">
+            <p>You have already submitted the quiz.</p>
+            <p>Please contact the administrator if you need to retake it.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Check retake status when page loads
+    checkRetakeStatus();
+
+    function startQuiz() {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      
+      if (!name || !phone) {
+        alert("Please enter your name and phone number");
+        return;
+      }
+      
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userPhone", phone);
+      
+      document.getElementById("user-info").classList.add("hidden");
+      document.getElementById("quiz-container").classList.remove("hidden");
+      
+      // Start timer
+      startTimer();
+      
+      // Update progress bar as questions are answered
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', updateProgress);
+      });
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function updateProgress() {
+      const totalQuestions = Object.keys(correctAnswers).length;
+      const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+      const progress = (answeredQuestions / totalQuestions) * 100;
+      document.getElementById('progress').style.width = `${progress}%`;
+    }
+
+    async function submitQuiz() {
+      if (quizSubmitted) return;
+      
+      quizSubmitted = true;
+      clearInterval(timerInterval);
+      
+      const form = document.getElementById("quiz");
+      const formData = new FormData(form);
+      let correct = 0, wrong = 0;
+      
+      Object.keys(correctAnswers).forEach(q => {
+        const ans = formData.get(q);
+        if (ans === correctAnswers[q]) correct++; 
+        else wrong++;
+      });
+      
+      const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
+      
+      // Display result
+      const resultDiv = document.getElementById("result");
+      
+      try {
+        const response = await fetch("/api/submit", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            name: localStorage.getItem("userName"),
+            phone: localStorage.getItem("userPhone"),
+            correct, 
+            wrong, 
+            score
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          resultDiv.innerHTML = `
+            <h3>Quiz Result</h3>
+            <p>Score: ${score}%</p>
+            <p>Correct Answers: ${correct}</p>
+            <p>Wrong Answers: ${wrong}</p>
+            <p>Thank you for completing the quiz!</p>
+          `;
+          
+          // Mark as submitted in localStorage
+          localStorage.setItem('quizSubmitted', 'true');
+        } else {
+          resultDiv.innerHTML = `
+            <h3>Error</h3>
+            <p>${data.message || 'Failed to submit quiz'}</p>
+          `;
+          resultDiv.classList.add("info");
+        }
+      } catch (error) {
+        console.error("Error submitting quiz:", error);
+        resultDiv.innerHTML = `
+          <h3>Network Error</h3>
+          <p>Please try again later</p>
+        `;
+        resultDiv.classList.add("info");
+      }
+      
+      if (score >= 70) {
+        resultDiv.classList.add("success");
+      } else {
+        resultDiv.classList.add("info");
+      }
+      
+      resultDiv.classList.remove("hidden");
+      document.getElementById("quiz-container").classList.add("hidden");
+      document.getElementById("submit-btn").disabled = true;
+    }
+  </script>
 </body>
 </html>
