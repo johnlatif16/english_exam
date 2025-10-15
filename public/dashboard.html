@@ -417,6 +417,9 @@
       q25: "25. Benha is the nearest town ………….. Cairo."
     };
 
+    // متغير لتخزين البيانات
+    let allResults = [];
+
     // دالة لإنشاء عرض الأسئلة والإجابات
     function createQuestionsDisplay(userAnswers) {
       if (!userAnswers || Object.keys(userAnswers).length === 0) {
@@ -459,8 +462,8 @@
       return html;
     }
 
-    // دالة لعرض/إخفاء الأسئلة
-    function toggleQuestions(userId, userAnswers) {
+    // دالة مبسطة لعرض/إخفاء الأسئلة
+    function toggleQuestions(userId) {
       const questionsRow = document.getElementById(`questions-${userId}`);
       
       if (questionsRow) {
@@ -472,16 +475,20 @@
           button.textContent = 'اظهار الاسئلة بالاجابات';
         }
       } else {
-        // إذا لم يكن موجودًا، قم بإنشائه وعرضه
+        // البحث عن بيانات المستخدم
+        const userResult = allResults.find(r => r.id === userId);
+        if (!userResult) return;
+        
+        // إنشاء الصف الجديد
         const row = document.createElement('tr');
         row.id = `questions-${userId}`;
         row.className = 'questions-row';
         row.innerHTML = `
           <td colspan="7">
             <div class="questions-content">
-              ${createQuestionsDisplay(userAnswers)}
+              ${createQuestionsDisplay(userResult.userAnswers || {})}
               <div class="questions-toggle">
-                <button class="btn-info" onclick="toggleQuestions('${userId}', ${JSON.stringify(userAnswers).replace(/'/g, "\\'")})">اخفاء الأسئلة</button>
+                <button class="btn-info" onclick="toggleQuestions('${userId}')">اخفاء الأسئلة</button>
               </div>
             </div>
           </td>
@@ -513,6 +520,8 @@
         }
         
         const data = await res.json();
+        allResults = data; // تخزين البيانات في المتغير العام
+        
         const table = document.getElementById("resultsTable");
         const tbody = table.querySelector("tbody");
         const stats = document.getElementById("stats");
@@ -554,7 +563,6 @@
             
             // التأكد من وجود userAnswers
             const hasUserAnswers = r.userAnswers && Object.keys(r.userAnswers).length > 0;
-            const userAnswersJson = hasUserAnswers ? JSON.stringify(r.userAnswers).replace(/'/g, "\\'") : '{}';
             
             tbody.innerHTML += `
               <tr data-user-id="${r.id}">
@@ -566,7 +574,7 @@
                 <td>${statusBadge}</td>
                 <td class="action-cell">
                   <div class="action-buttons">
-                    <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}', ${userAnswersJson})">
+                    <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}')">
                       ${hasUserAnswers ? 'اظهار الاسئلة بالاجابات' : 'لا توجد إجابات'}
                     </button>
                     ${isAllowed 
